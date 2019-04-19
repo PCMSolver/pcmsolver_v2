@@ -1,0 +1,11 @@
+UNITS = AU
+MEDIUM
+{
+	SOLVENT = h2o
+}
+
+CAVITY
+{
+	TYPE = RESTART
+	NPZFILE  =  cavity.npz
+}

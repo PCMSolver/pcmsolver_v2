@@ -1,0 +1,10 @@
+ignore:
+  - "src/utils/getkw"
+coverage:
+  status:
+    project:
+      default:
+        threshold: 2%
+    patch:
+      default:
+        threshold: 2%

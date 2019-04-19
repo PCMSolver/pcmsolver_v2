@@ -1,0 +1,11 @@
+target_sources(pcm-objlib
+  PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/pedra_dblas.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pedra_dlapack.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pedra_precision.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pedra_print.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pedra_symmetry.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pedra_utils.f90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pedra_cavity.F90
+    ${CMAKE_CURRENT_SOURCE_DIR}/pedra_cavity_interface.F90
+  )

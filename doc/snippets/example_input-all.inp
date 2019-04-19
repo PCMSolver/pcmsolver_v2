@@ -1,0 +1,46 @@
+Units = [String]
+CODATA = [Integer]
+Cavity {
+       Type = [String]
+       NpzFile = [String]
+       Area = [Double]
+       Scaling = [Bool]
+       RadiiSet = [String]
+       MinRadius = [Double]
+       Mode = [String]
+       Atoms = [Array of Integers]
+       Radii = [Array of Doubles]
+       Spheres = [Array of Doubles]
+}
+Medium {
+       Nonequilibrium = [Bool]
+       Solvent = [String]
+       SolverType = [String]
+       MatrixSymm = [Bool]
+       Correction = [Double]
+       DiagonalIntegrator = [String]
+       DiagonalScaling = [Double]
+       ProbeRadius = [Double]
+       Green<GreenTag> {
+             Type = [String]
+             Der = [String]
+             Eps = [Double]
+             EpsDyn = [Double]
+             Eps1 = [Double]
+             EpsDyn1 = [Double]
+             Eps2 = [Double]
+             EpsDyn2 = [Double]
+             Center = [Double]
+             Width = [Double]
+             InterfaceOrigin = [Array of Doubles]
+             MaxL = [Integer]
+       }
+}
+Molecule {
+   MEP = [Bool]
+   Geometry = [Double]
+}
+ChargeDistribution {
+  Monopoles = [Double]
+  Dipoles = [Double]
+}

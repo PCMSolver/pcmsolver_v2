@@ -1,0 +1,27 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.1.0
+    hooks:
+      - id: check-case-conflict
+      - id: check-merge-conflict
+  - repo: https://github.com/doublify/pre-commit-clang-format.git
+    sha: master
+    hooks:
+      - id: clang-format
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.1.6
+    hooks:
+      - id: insert-license
+        files: \.py$
+        args: ['--license-filepath', '.license-header']
+      - id: insert-license
+        files: \.{h,c}pp$
+        args: ['--license-filepath', '.license-header', '--comment-style', '/*| *| */' ]
+  - repo: https://github.com/pre-commit/mirrors-isort
+    rev: v4.3.17
+    hooks:
+      - id: isort
+  - repo: https://github.com/ambv/black
+    rev: 18.9b0
+    hooks:
+      - id: black
