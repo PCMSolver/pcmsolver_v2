@@ -11,5 +11,5 @@ list(APPEND headers_list
   )
 # Sets install directory for all the headers in the list
 foreach(_header IN LISTS _headers_list)
-    install(FILES ${_header} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/green/dielectric_profile)
+  install(FILES ${_header} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/green/dielectric_profile)
 endforeach()

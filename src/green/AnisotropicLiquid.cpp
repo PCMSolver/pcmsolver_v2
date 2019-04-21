@@ -51,7 +51,7 @@ DerivativeTraits AnisotropicLiquid<DerivativeTraits>::operator()(
     DerivativeTraits * sp,
     DerivativeTraits * pp) const {
   // The distance has to be calculated using epsilonInv_ as metric:
-  DerivativeTraits scratch = 0.0;
+  DerivativeTraits scratch(0.0);
   Eigen::Matrix3d epsilonInv_ = this->profile_.epsilonInv();
   double detEps_ = this->profile_.detEps();
   for (int i = 0; i < 3; ++i) {
@@ -77,27 +77,29 @@ double AnisotropicLiquid<DerivativeTraits>::kernelD_impl(
 
 template <typename DerivativeTraits>
 KernelS AnisotropicLiquid<DerivativeTraits>::exportKernelS_impl() const {
-  return pcm::bind(
-      &AnisotropicLiquid<DerivativeTraits>::kernelS, *this, pcm::_1, pcm::_2);
+  return std::bind(&AnisotropicLiquid<DerivativeTraits>::kernelS,
+                   *this,
+                   std::placeholders::_1,
+                   std::placeholders::_2);
 }
 
 template <typename DerivativeTraits>
 KernelD AnisotropicLiquid<DerivativeTraits>::exportKernelD_impl() const {
-  return pcm::bind(&AnisotropicLiquid<DerivativeTraits>::kernelD,
+  return std::bind(&AnisotropicLiquid<DerivativeTraits>::kernelD,
                    *this,
-                   pcm::_1,
-                   pcm::_2,
-                   pcm::_3);
+                   std::placeholders::_1,
+                   std::placeholders::_2,
+                   std::placeholders::_3);
 }
 
 template <typename DerivativeTraits>
 DerivativeProbe AnisotropicLiquid<DerivativeTraits>::exportDerivativeProbe_impl()
     const {
-  return pcm::bind(&AnisotropicLiquid<DerivativeTraits>::derivativeProbe,
+  return std::bind(&AnisotropicLiquid<DerivativeTraits>::derivativeProbe,
                    *this,
-                   pcm::_1,
-                   pcm::_2,
-                   pcm::_3);
+                   std::placeholders::_1,
+                   std::placeholders::_2,
+                   std::placeholders::_3);
 }
 
 template <typename DerivativeTraits>

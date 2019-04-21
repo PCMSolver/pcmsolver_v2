@@ -1,9 +1,9 @@
-target_sources(pcm-objlib
+target_sources(pcm
   PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/Element.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/GePolCavity.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ICavity.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/RestartCavity.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Element.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/GePolCavity.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ICavity.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/RestartCavity.cpp
   )
 
 # List of headers
@@ -17,5 +17,5 @@ list(APPEND headers_list
   )
 # Sets install directory for all the headers in the list
 foreach(_header IN LISTS headers_list)
-    install(FILES ${_header} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/cavity)
+  install(FILES ${_header} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/cavity)
 endforeach()

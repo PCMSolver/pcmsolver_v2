@@ -2,6 +2,29 @@
 
 ## [Unreleased]
 
+## [Version 2.0.0-alpha1] - 2019-04-XY
+
+We have introduced a number of breaking changes, motivated by the need to
+modernize the library.
+
+- The version 1 release series is available in the archived repository [PCMSolver/pcmsolver_v1]
+
+### Changed
+
+- **BREAKING** We require a fully compliant C++14 compiler.
+- **BREAKING** We require CMake 3.9
+- Project dependencies are now managed as a superbuild.
+
+### Removed
+
+- The Boost dependency is gone :confetti:
+- The Getkw dependency is gone :confetti: Input reading is managed through
+[parselglossy] and JSON.
+- The legacy GePol cavity generator has been replaced by the TsLess generator.
+- The diffuse interface Green's function has been removed. We are in the
+process of rewriting the
+
+
 ## [Version 1.2.3] - 2019-02-14
 
 ### Added

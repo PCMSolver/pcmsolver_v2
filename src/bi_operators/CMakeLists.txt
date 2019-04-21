@@ -1,5 +1,5 @@
 # List of sources
-target_sources(pcm-objlib
+target_sources(pcm
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Collocation.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/IBoundaryIntegralOperator.cpp
@@ -18,5 +18,5 @@ list(APPEND headers_list
   )
 # Sets install directory for all the headers in the list
 foreach(_header IN LISTS headers_list)
-    install(FILES ${_header} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/bi_operators)
+  install(FILES ${_header} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/bi_operators)
 endforeach()

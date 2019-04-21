@@ -25,7 +25,7 @@
 
 #include "Config.hpp"
 
-#include "taylor.hpp"
+#include <taylor/taylor.hpp>
 
 namespace pcm {
 typedef double Stencil;

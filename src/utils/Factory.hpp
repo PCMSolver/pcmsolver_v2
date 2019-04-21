@@ -114,7 +114,7 @@ public:
  *  input value to the object creation callback function.
  */
 template <typename CreateObject>
-class Factory __final : public detail::BaseFactory<CreateObject> {
+class Factory final : public detail::BaseFactory<CreateObject> {
 public:
   /*! \brief Calls the appropriate creation functor, based on the passed objID
    *  \param[in] objID the object's identification string

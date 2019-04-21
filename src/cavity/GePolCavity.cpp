@@ -279,7 +279,7 @@ void GePolCavity::build(const std::string & suffix,
   // The indices of the equal elements are gathered in a std::pair and saved into a
   // std::vector
   double threshold = 1.0e-12;
-  std::vector<std::pair<PCMSolverIndex, PCMSolverIndex> > equal_elements;
+  std::vector<std::pair<PCMSolverIndex, PCMSolverIndex>> equal_elements;
   for (PCMSolverIndex i = 0; i < nElements_; ++i) {
     for (PCMSolverIndex j = i + 1; j < nElements_; ++j) {
       Eigen::Vector3d difference = elementCenter_.col(i) - elementCenter_.col(j);
@@ -292,11 +292,11 @@ void GePolCavity::build(const std::string & suffix,
     // Not sure that printing the list of pairs is actually of any help...
     std::string list_of_pairs;
     for (PCMSolverIndex i = 0; i < equal_elements.size(); ++i) {
-      list_of_pairs += "(" + pcm::to_string(equal_elements[i].first) + ", " +
-                       pcm::to_string(equal_elements[i].second) + ")\n";
+      list_of_pairs += "(" + std::to_string(equal_elements[i].first) + ", " +
+                       std::to_string(equal_elements[i].second) + ")\n";
     }
     // Prepare the error message:
-    std::string message = pcm::to_string(equal_elements.size()) +
+    std::string message = std::to_string(equal_elements.size()) +
                           " cavity finite element centers overlap exactly!\n" +
                           list_of_pairs;
     PCMSOLVER_ERROR(message);

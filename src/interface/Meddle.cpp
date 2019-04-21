@@ -123,9 +123,9 @@ void Meddle::CTORBody() {
 Meddle::Meddle(const Input & input, const HostWriter & write)
     : hostWriter_(write),
       input_(input),
-      cavity_(__nullptr),
-      K_0_(__nullptr),
-      K_d_(__nullptr),
+      cavity_(nullptr),
+      K_0_(nullptr),
+      K_d_(nullptr),
       hasDynamic_(false) {
   input_.initMolecule();
   CTORBody();
@@ -134,9 +134,9 @@ Meddle::Meddle(const Input & input, const HostWriter & write)
 Meddle::Meddle(const std::string & inputFileName, const HostWriter & write)
     : hostWriter_(write),
       input_(Input(inputFileName)),
-      cavity_(__nullptr),
-      K_0_(__nullptr),
-      K_d_(__nullptr),
+      cavity_(nullptr),
+      K_0_(nullptr),
+      K_d_(nullptr),
       hasDynamic_(false) {
   input_.initMolecule();
   CTORBody();
@@ -150,9 +150,9 @@ Meddle::Meddle(int nr_nuclei,
                const std::string & inputFileName)
     : hostWriter_(write),
       input_(Input(inputFileName)),
-      cavity_(__nullptr),
-      K_0_(__nullptr),
-      K_d_(__nullptr),
+      cavity_(nullptr),
+      K_0_(nullptr),
+      K_d_(nullptr),
       hasDynamic_(false) {
   TIMER_ON("Meddle::initInput");
   initInput(nr_nuclei, charges, coordinates, symmetry_info);
@@ -169,9 +169,9 @@ Meddle::Meddle(int nr_nuclei,
                const HostWriter & write)
     : hostWriter_(write),
       input_(Input(host_input)),
-      cavity_(__nullptr),
-      K_0_(__nullptr),
-      K_d_(__nullptr),
+      cavity_(nullptr),
+      K_0_(nullptr),
+      K_d_(nullptr),
       hasDynamic_(false) {
   TIMER_ON("Meddle::initInput");
   initInput(nr_nuclei, charges, coordinates, symmetry_info);
