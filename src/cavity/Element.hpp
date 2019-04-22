@@ -26,8 +26,6 @@
 #include <ostream>
 #include <vector>
 
-#include "Config.hpp"
-
 #include "utils/Sphere.hpp"
 
 /*! \file Element.hpp */

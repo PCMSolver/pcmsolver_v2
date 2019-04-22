@@ -27,8 +27,6 @@
 #include <iosfwd>
 #include <utility>
 
-#include "Config.hpp"
-
 /*! \file OneLayerErf.hpp */
 
 namespace pcm {

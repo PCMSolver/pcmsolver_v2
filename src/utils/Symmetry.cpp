@@ -23,8 +23,6 @@
 
 #include "Symmetry.hpp"
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
 
 /* Indexing of symmetry operations and their mapping to a bitstring:

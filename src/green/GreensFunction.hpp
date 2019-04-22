@@ -27,8 +27,6 @@
 #include <functional>
 #include <iosfwd>
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
 
 #include "DerivativeTypes.hpp"

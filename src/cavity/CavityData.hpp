@@ -25,8 +25,6 @@
 
 #include <string>
 
-#include "Config.hpp"
-
 #include "utils/Molecule.hpp"
 
 namespace pcm {

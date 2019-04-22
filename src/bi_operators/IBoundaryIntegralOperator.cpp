@@ -23,13 +23,12 @@
 
 #include "IBoundaryIntegralOperator.hpp"
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
 
 #include "cavity/ICavity.hpp"
 #include "green/IGreensFunction.hpp"
 #include "utils/MathUtils.hpp"
+#include "utils/Timer.hpp"
 
 namespace pcm {
 using cavity::Element;
@@ -52,15 +51,15 @@ Eigen::MatrixXd IBoundaryIntegralOperator::computeS(
   }
   // Perform symmetry blocking
   // The total size of the cavity
-  PCMSolverIndex cavitySize = cav.size();
+  int cavitySize = cav.size();
   // The number of irreps in the group
   int nrBlocks = cav.pointGroup().nrIrrep();
   // The size of the irreducible portion of the cavity
   int dimBlock = cav.irreducible_size();
   if (cav.pointGroup().nrGenerators() != 0) {
-    TIMER_ON("Symmetry blocking");
+    timer::timerON("Symmetry blocking");
     symmetryBlocking(biop, cavitySize, dimBlock, nrBlocks);
-    TIMER_OFF("Symmetry blocking");
+    timer::timerOFF("Symmetry blocking");
   }
   return biop;
 }
@@ -71,15 +70,15 @@ Eigen::MatrixXd IBoundaryIntegralOperator::computeD(
   Eigen::MatrixXd biop = computeD_impl(cav.elements(), gf);
   // Perform symmetry blocking
   // The total size of the cavity
-  PCMSolverIndex cavitySize = cav.size();
+  int cavitySize = cav.size();
   // The number of irreps in the group
   int nrBlocks = cav.pointGroup().nrIrrep();
   // The size of the irreducible portion of the cavity
   int dimBlock = cav.irreducible_size();
   if (cav.pointGroup().nrGenerators() != 0) {
-    TIMER_ON("Symmetry blocking");
+    timer::timerON("Symmetry blocking");
     symmetryBlocking(biop, cavitySize, dimBlock, nrBlocks);
-    TIMER_OFF("Symmetry blocking");
+    timer::timerOFF("Symmetry blocking");
   }
   return biop;
 }

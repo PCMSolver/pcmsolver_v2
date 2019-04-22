@@ -29,8 +29,6 @@
 #include <string>
 #include <vector>
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
 
 #include "bi_operators/BIOperatorData.hpp"
@@ -38,6 +36,7 @@
 #include "green/GreenData.hpp"
 #include "interface/Input.hpp"
 #include "solver/SolverData.hpp"
+#include "utils/PhysicalConstants.hpp"
 #include "utils/Sphere.hpp"
 
 using pcm::Input;

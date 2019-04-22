@@ -11,12 +11,12 @@ To time a code snippet:
 
 .. code-block:: cpp
 
-   TIMER_ON("code-snippet");
+   timer::timerON("code-snippet");
    // code-snippet
-   TIMER_OFF("code-snippet");
+   timer::timerOFF("code-snippet");
 
 The timings are printed out to the ``pcmsolver.timer.dat`` by a call
-to the ``TIMER_DONE`` macro. This should obviously happen at the very end
+to the ``timer::timerDONE`` macro. This should obviously happen at the very end
 of the execution!
 
 .. doxygenfile:: TimerInterface.hpp

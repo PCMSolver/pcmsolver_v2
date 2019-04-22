@@ -23,8 +23,6 @@
 
 #pragma once
 
-#include "Config.hpp"
-
 #include <taylor/taylor.hpp>
 
 namespace pcm {

@@ -27,8 +27,6 @@
 #include <string>
 #include <vector>
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
 
 /*! \file IEFSolver.hpp */

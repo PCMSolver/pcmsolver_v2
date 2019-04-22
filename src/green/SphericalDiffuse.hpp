@@ -25,8 +25,6 @@
 
 #include <iosfwd>
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
 
 /*! \file SphericalDiffuse.hpp */

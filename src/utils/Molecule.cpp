@@ -30,13 +30,12 @@
 #include <string>
 #include <vector>
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
 #include <Eigen/Eigenvalues>
 
 #include "Atom.hpp"
 #include "MathUtils.hpp"
+#include "PhysicalConstants.hpp"
 #include "Symmetry.hpp"
 #include "cavity/Element.hpp"
 

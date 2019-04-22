@@ -34,13 +34,14 @@
 #include "green/GreenData.hpp"
 #include "interface/Input.hpp"
 #include "solver/SolverData.hpp"
+#include "utils/PhysicalConstants.hpp"
 #include "utils/Sphere.hpp"
 
 using pcm::Input;
 using pcm::utils::Sphere;
 
 /*! \class Input
- *  \test \b Input_CPCM tests input reCPCMading on an input file parsed by
+ *  \test \b Input_CPCM tests input reading on an input file parsed by
  * go_pcm.py
  */
 TEST_CASE("Input reading using GetKw for an input file for a CPCM solver",

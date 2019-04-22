@@ -25,8 +25,6 @@
 
 #include <iosfwd>
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
 
 /*! \file IonicLiquid.hpp */
@@ -40,6 +38,7 @@ class Element;
 #include "GreenData.hpp"
 #include "GreensFunction.hpp"
 #include "dielectric_profile/Yukawa.hpp"
+#include "utils/ErrorHandling.hpp"
 
 namespace pcm {
 namespace green {

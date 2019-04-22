@@ -27,8 +27,6 @@
 #include <string>
 #include <vector>
 
-#include "Config.hpp"
-
 /*! \file GePolCavity.hpp*/
 
 namespace pcm {

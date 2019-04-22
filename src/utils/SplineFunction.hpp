@@ -25,8 +25,6 @@
 
 #include <algorithm>
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
 #include <unsupported/Eigen/Splines>
 

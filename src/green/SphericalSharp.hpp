@@ -27,8 +27,6 @@
 #include <iosfwd>
 #include <vector>
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
 
 /*! \file SphericalSharp.hpp */
@@ -46,6 +44,7 @@ struct Sharp;
 #include "GreenData.hpp"
 #include "GreensFunction.hpp"
 #include "dielectric_profile/Sharp.hpp"
+#include "utils/ErrorHandling.hpp"
 
 namespace pcm {
 namespace green {

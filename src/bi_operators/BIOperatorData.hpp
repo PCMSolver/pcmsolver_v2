@@ -23,8 +23,6 @@
 
 #pragma once
 
-#include "Config.hpp"
-
 /*! \file BIOperatorData.hpp */
 
 namespace pcm {

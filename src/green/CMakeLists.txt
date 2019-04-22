@@ -1,4 +1,4 @@
-target_sources(pcm
+target_sources(pcm-object
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/AnisotropicLiquid.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/IonicLiquid.cpp

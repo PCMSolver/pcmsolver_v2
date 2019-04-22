@@ -25,8 +25,6 @@
 
 #include <iosfwd>
 
-#include "Config.hpp"
-
 /*! \file Sharp.hpp */
 
 namespace pcm {

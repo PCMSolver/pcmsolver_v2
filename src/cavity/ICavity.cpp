@@ -25,8 +25,6 @@
 
 #include <iostream>
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
 
 #include "utils/MathUtils.hpp"
@@ -73,7 +71,7 @@ void ICavity::saveCavity(const std::string & fname) {
   cnpy::custom::npz_save(fname, "centers", elementCenter_);
   // Write normals
   cnpy::custom::npz_save(fname, "normals", elementNormal_);
-  for (PCMSolverIndex i = 0; i < nElements_; ++i) {
+  for (int i = 0; i < nElements_; ++i) {
     // Write vertices
     cnpy::custom::npz_save(
         fname, "vertices_" + std::to_string(i), elements_[i].vertices());
@@ -131,7 +129,7 @@ void ICavity::loadCavity(const std::string & fname) {
   bool has_vertices =
       loaded_cavity.find("vertices_0") == loaded_cavity.end() ? false : true;
   // Reconstruct the elements_ vector
-  for (PCMSolverIndex i = 0; i < nElements_; ++i) {
+  for (int i = 0; i < nElements_; ++i) {
     bool irr = false;
     // PEDRA puts the irreducible tesserae first
     if (i < nIrrElements_)

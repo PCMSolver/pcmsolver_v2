@@ -26,7 +26,6 @@
 #include <string>
 #include <vector>
 
-#include "Config.hpp"
 #include "PCMSolverExport.h"
 
 #include "utils/getkw/Getkw.h"
@@ -160,7 +159,7 @@ private:
    */
   void reader(const PCMInput & host_input);
   /*! Perform semantic input parsing aka sanity check */
-  void semanticCheck() attribute(const);
+  void semanticCheck();
 
   /// Units of measure
   std::string units_;

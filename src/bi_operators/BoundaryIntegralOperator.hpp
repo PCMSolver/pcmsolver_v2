@@ -23,8 +23,6 @@
 
 #pragma once
 
-#include "Config.hpp"
-
 #include "BIOperatorData.hpp"
 #include "Collocation.hpp"
 #include "IBoundaryIntegralOperator.hpp"

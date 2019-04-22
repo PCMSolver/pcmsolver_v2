@@ -26,8 +26,6 @@
 #include <cmath>
 #include <iosfwd>
 
-#include "Config.hpp"
-
 /*! \file OneLayerLog.hpp */
 
 namespace pcm {

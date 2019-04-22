@@ -27,8 +27,6 @@
 #include <fstream>
 #include <vector>
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
 
 // Boost.Odeint includes

@@ -27,7 +27,6 @@
 #include <string>
 #include <vector>
 
-#include "Config.hpp"
 #include "PCMSolverExport.h"
 
 #include <Eigen/Core>

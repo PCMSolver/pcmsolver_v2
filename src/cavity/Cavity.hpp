@@ -23,8 +23,6 @@
 
 #pragma once
 
-#include "Config.hpp"
-
 #include "GePolCavity.hpp"
 #include "ICavity.hpp"
 #include "RestartCavity.hpp"

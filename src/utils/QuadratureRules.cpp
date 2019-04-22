@@ -25,8 +25,6 @@
 
 #include <vector>
 
-#include "Config.hpp"
-
 namespace pcm {
 namespace utils {
 namespace detail {

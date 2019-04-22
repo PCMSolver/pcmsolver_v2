@@ -23,8 +23,6 @@
 
 #pragma once
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
 
 #include "DerivativeTypes.hpp"

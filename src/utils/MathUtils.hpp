@@ -32,11 +32,10 @@
 #include <limits>
 #include <vector>
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 
+#include "ErrorHandling.hpp"
 #include "SplineFunction.hpp"
 #include "Symmetry.hpp"
 #include "cnpy.hpp"
@@ -123,8 +122,8 @@ template <typename T> inline int sign(T val) { return (T(0) < val) - (val < T(0)
  * blocks)
  */
 inline void symmetryBlocking(Eigen::MatrixXd & matrix,
-                             PCMSolverIndex cavitySize,
-                             PCMSolverIndex ntsirr,
+                             int cavitySize,
+                             int ntsirr,
                              int nr_irrep) {
   // This function implements the simmetry-blocking of the PCM
   // matrix due to point group symmetry as reported in:
@@ -185,8 +184,8 @@ inline void symmetryBlocking(Eigen::MatrixXd & matrix,
     }
   }
   // Traverse the matrix and discard numerical zeros
-  for (PCMSolverIndex a = 0; a < cavitySize; ++a) {
-    for (PCMSolverIndex b = 0; b < cavitySize; ++b) {
+  for (int a = 0; a < cavitySize; ++a) {
+    for (int b = 0; b < cavitySize; ++b) {
       if (numericalZero(matrix(a, b))) {
         matrix(a, b) = 0.0;
       }
@@ -446,7 +445,7 @@ inline Eigen::Matrix<Scalar, Eigen::Dynamic, Eigen::Dynamic> npy_to_eigen(
     const NpyArray & npy_array) {
   if (npy_array.shape.size() > 2)
     PCMSOLVER_ERROR("Only vectors and matrices can be read into Eigen objects.");
-  return Eigen::Map<Eigen::Matrix<Scalar, Eigen::Dynamic, Eigen::Dynamic> >(
+  return Eigen::Map<Eigen::Matrix<Scalar, Eigen::Dynamic, Eigen::Dynamic>>(
       reinterpret_cast<Scalar *>(npy_array.data),
       npy_array.shape[0],
       npy_array.shape[1]);

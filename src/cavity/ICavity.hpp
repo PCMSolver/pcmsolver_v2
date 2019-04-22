@@ -26,8 +26,6 @@
 #include <iosfwd>
 #include <vector>
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
 
 #include "Element.hpp"
@@ -56,9 +54,9 @@ protected:
   /// The molecule to be wrapped by the cavity
   Molecule molecule_;
   /// Number of finite elements generated
-  PCMSolverIndex nElements_;
+  int nElements_;
   /// Number of irreducible finite elements
-  PCMSolverIndex nIrrElements_;
+  int nIrrElements_;
   /// Whether the cavity has been built
   bool built;
   /// Coordinates of elements centers
@@ -122,10 +120,10 @@ public:
   const Eigen::VectorXd & elementArea() const { return elementArea_; }
   double elementArea(int i) { return elementArea_(i); }
   double elementArea(int i) const { return elementArea_(i); }
-  PCMSolverIndex size() { return nElements_; }
-  PCMSolverIndex size() const { return nElements_; }
-  PCMSolverIndex irreducible_size() { return nIrrElements_; }
-  PCMSolverIndex irreducible_size() const { return nIrrElements_; }
+  int size() { return nElements_; }
+  int size() const { return nElements_; }
+  int irreducible_size() { return nIrrElements_; }
+  int irreducible_size() const { return nIrrElements_; }
   Symmetry pointGroup() const { return molecule_.pointGroup(); }
   std::vector<Sphere> & spheres() { return spheres_; }
   const std::vector<Sphere> & spheres() const { return spheres_; }

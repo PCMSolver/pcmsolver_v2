@@ -23,8 +23,6 @@
 
 #pragma once
 
-#include "Config.hpp"
-
 #include "CPCMSolver.hpp"
 #include "IEFSolver.hpp"
 #include "ISolver.hpp"

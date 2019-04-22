@@ -25,8 +25,6 @@
 
 #include <iostream>
 
-#include "Config.hpp"
-
 /*! \file Yukawa.hpp */
 
 namespace pcm {

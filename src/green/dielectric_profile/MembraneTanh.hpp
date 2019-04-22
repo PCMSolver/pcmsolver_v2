@@ -26,8 +26,6 @@
 #include <iosfwd>
 #include <utility>
 
-#include "Config.hpp"
-
 /*! \file MembraneTanh.hpp */
 
 namespace pcm {

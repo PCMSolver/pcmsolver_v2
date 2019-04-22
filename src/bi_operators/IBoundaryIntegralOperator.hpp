@@ -25,8 +25,6 @@
 
 #include <vector>
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
 
 namespace pcm {

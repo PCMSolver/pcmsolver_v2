@@ -23,8 +23,6 @@
 
 #include "Collocation.hpp"
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
 
 #include "BIOperatorData.hpp"
@@ -41,12 +39,12 @@ Collocation::Collocation(double fac) : factor_(fac) {}
 
 Eigen::MatrixXd Collocation::computeS_impl(const std::vector<Element> & elems,
                                            const IGreensFunction & gf) const {
-  PCMSolverIndex cavitySize = elems.size();
+  int cavitySize = elems.size();
   Eigen::MatrixXd S = Eigen::MatrixXd::Zero(cavitySize, cavitySize);
-  for (PCMSolverIndex i = 0; i < cavitySize; ++i) {
+  for (int i = 0; i < cavitySize; ++i) {
     Element source = elems[i];
     S(i, i) = gf.singleLayer(source, factor_);
-    for (PCMSolverIndex j = 0; j < cavitySize; ++j) {
+    for (int j = 0; j < cavitySize; ++j) {
       Element probe = elems[j];
       if (i != j)
         S(i, j) = gf.kernelS(source.center(), probe.center());
@@ -57,12 +55,12 @@ Eigen::MatrixXd Collocation::computeS_impl(const std::vector<Element> & elems,
 
 Eigen::MatrixXd Collocation::computeD_impl(const std::vector<Element> & elems,
                                            const IGreensFunction & gf) const {
-  PCMSolverIndex cavitySize = elems.size();
+  int cavitySize = elems.size();
   Eigen::MatrixXd D = Eigen::MatrixXd::Zero(cavitySize, cavitySize);
-  for (PCMSolverIndex i = 0; i < cavitySize; ++i) {
+  for (int i = 0; i < cavitySize; ++i) {
     Element source = elems[i];
     D(i, i) = gf.doubleLayer(source, factor_);
-    for (PCMSolverIndex j = 0; j < cavitySize; ++j) {
+    for (int j = 0; j < cavitySize; ++j) {
       Element probe = elems[j];
       if (i != j)
         D(i, j) =

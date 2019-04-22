@@ -25,7 +25,6 @@
 
 #include <iosfwd>
 
-#include "Config.hpp"
 #include "PCMSolverExport.h"
 
 #include <Eigen/Core>

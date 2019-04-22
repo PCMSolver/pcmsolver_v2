@@ -25,8 +25,6 @@
 
 #include <cmath>
 
-#include "Config.hpp"
-
 #include <Eigen/Cholesky>
 #include <Eigen/Core>
 #include <Eigen/LU>
@@ -35,6 +33,7 @@
 #include "cavity/Element.hpp"
 #include "cavity/ICavity.hpp"
 #include "green/IGreensFunction.hpp"
+#include "utils/Timer.hpp"
 
 namespace pcm {
 namespace solver {
@@ -43,26 +42,26 @@ Eigen::MatrixXd anisotropicTEpsilon(const ICavity & cav,
                                     const IGreensFunction & gf_i,
                                     const IGreensFunction & gf_o,
                                     const IBoundaryIntegralOperator & op) {
-  TIMER_ON("Computing SI");
+  timer::timerON("Computing SI");
   Eigen::MatrixXd SI = op.computeS(cav, gf_i);
-  TIMER_OFF("Computing SI");
-  TIMER_ON("Computing DI");
+  timer::timerOFF("Computing SI");
+  timer::timerON("Computing DI");
   Eigen::MatrixXd DI = op.computeD(cav, gf_i);
-  TIMER_OFF("Computing DI");
-  TIMER_ON("Computing SE");
+  timer::timerOFF("Computing DI");
+  timer::timerON("Computing SE");
   Eigen::MatrixXd SE = op.computeS(cav, gf_o);
-  TIMER_OFF("Computing SE");
-  TIMER_ON("Computing DE");
+  timer::timerOFF("Computing SE");
+  timer::timerON("Computing DE");
   Eigen::MatrixXd DE = op.computeD(cav, gf_o);
-  TIMER_OFF("Computing DE");
+  timer::timerOFF("Computing DE");
 
   Eigen::MatrixXd a = cav.elementArea().asDiagonal();
   Eigen::MatrixXd Id = Eigen::MatrixXd::Identity(cav.size(), cav.size());
 
-  TIMER_ON("Assemble T matrix");
+  timer::timerON("Assemble T matrix");
   Eigen::MatrixXd T = ((2 * M_PI * Id - DE * a) * SI +
                        SE * (2 * M_PI * Id + a * DI.adjoint().eval()));
-  TIMER_OFF("Assemble T matrix");
+  timer::timerOFF("Assemble T matrix");
 
   return T;
 }
@@ -71,20 +70,20 @@ Eigen::MatrixXd isotropicTEpsilon(const ICavity & cav,
                                   const IGreensFunction & gf_i,
                                   double epsilon,
                                   const IBoundaryIntegralOperator & op) {
-  TIMER_ON("Computing SI");
+  timer::timerON("Computing SI");
   Eigen::MatrixXd SI = op.computeS(cav, gf_i);
-  TIMER_OFF("Computing SI");
-  TIMER_ON("Computing DI");
+  timer::timerOFF("Computing SI");
+  timer::timerON("Computing DI");
   Eigen::MatrixXd DI = op.computeD(cav, gf_i);
-  TIMER_OFF("Computing DI");
+  timer::timerOFF("Computing DI");
 
   Eigen::MatrixXd a = cav.elementArea().asDiagonal();
   Eigen::MatrixXd Id = Eigen::MatrixXd::Identity(cav.size(), cav.size());
 
   double fact = (epsilon + 1.0) / (epsilon - 1.0);
-  TIMER_ON("Assemble T matrix");
+  timer::timerON("Assemble T matrix");
   Eigen::MatrixXd T = (2 * M_PI * fact * Id - DI * a) * SI;
-  TIMER_OFF("Assemble T matrix");
+  timer::timerOFF("Assemble T matrix");
 
   return T;
 }
@@ -93,26 +92,26 @@ Eigen::MatrixXd anisotropicRinfinity(const ICavity & cav,
                                      const IGreensFunction & gf_i,
                                      const IGreensFunction & gf_o,
                                      const IBoundaryIntegralOperator & op) {
-  TIMER_ON("Computing SI");
+  timer::timerON("Computing SI");
   Eigen::MatrixXd SI = op.computeS(cav, gf_i);
-  TIMER_OFF("Computing SI");
-  TIMER_ON("Computing DI");
+  timer::timerOFF("Computing SI");
+  timer::timerON("Computing DI");
   Eigen::MatrixXd DI = op.computeD(cav, gf_i);
-  TIMER_OFF("Computing DI");
-  TIMER_ON("Computing SE");
+  timer::timerOFF("Computing DI");
+  timer::timerON("Computing SE");
   Eigen::MatrixXd SE = op.computeS(cav, gf_o);
-  TIMER_OFF("Computing SE");
-  TIMER_ON("Computing DE");
+  timer::timerOFF("Computing SE");
+  timer::timerON("Computing DE");
   Eigen::MatrixXd DE = op.computeD(cav, gf_o);
-  TIMER_OFF("Computing DE");
+  timer::timerOFF("Computing DE");
 
   Eigen::MatrixXd a = cav.elementArea().asDiagonal();
   Eigen::MatrixXd Id = Eigen::MatrixXd::Identity(cav.size(), cav.size());
 
-  TIMER_ON("Assemble R matrix");
+  timer::timerON("Assemble R matrix");
   Eigen::MatrixXd R =
       ((2 * M_PI * Id - DE * a) - SE * SI.llt().solve((2 * M_PI * Id - DI * a)));
-  TIMER_OFF("Assemble R matrix");
+  timer::timerOFF("Assemble R matrix");
 
   return R;
 }
@@ -120,16 +119,16 @@ Eigen::MatrixXd anisotropicRinfinity(const ICavity & cav,
 Eigen::MatrixXd isotropicRinfinity(const ICavity & cav,
                                    const IGreensFunction & gf_i,
                                    const IBoundaryIntegralOperator & D) {
-  TIMER_ON("Computing DI");
+  timer::timerON("Computing DI");
   Eigen::MatrixXd DI = D.computeD(cav, gf_i);
-  TIMER_OFF("Computing DI");
+  timer::timerOFF("Computing DI");
 
   Eigen::MatrixXd a = cav.elementArea().asDiagonal();
   Eigen::MatrixXd Id = Eigen::MatrixXd::Identity(cav.size(), cav.size());
 
-  TIMER_ON("Assemble R matrix");
+  timer::timerON("Assemble R matrix");
   Eigen::MatrixXd R = (2 * M_PI * Id - DI * a);
-  TIMER_OFF("Assemble R matrix");
+  timer::timerOFF("Assemble R matrix");
 
   return R;
 }
@@ -141,9 +140,9 @@ Eigen::MatrixXd anisotropicIEFMatrix(const ICavity & cav,
   Eigen::MatrixXd T = anisotropicTEpsilon(cav, gf_i, gf_o, op);
   Eigen::MatrixXd R = anisotropicRinfinity(cav, gf_i, gf_o, op);
 
-  TIMER_ON("Assemble T^-1R matrix");
+  timer::timerON("Assemble T^-1R matrix");
   Eigen::MatrixXd fullPCMMatrix = T.partialPivLu().solve(R);
-  TIMER_OFF("Assemble T^-1R matrix");
+  timer::timerOFF("Assemble T^-1R matrix");
 
   return fullPCMMatrix;
 }
@@ -155,9 +154,9 @@ Eigen::MatrixXd isotropicIEFMatrix(const ICavity & cav,
   Eigen::MatrixXd T = isotropicTEpsilon(cav, gf_i, epsilon, op);
   Eigen::MatrixXd R = isotropicRinfinity(cav, gf_i, op);
 
-  TIMER_ON("Assemble T^-1R matrix");
+  timer::timerON("Assemble T^-1R matrix");
   Eigen::MatrixXd fullPCMMatrix = T.partialPivLu().solve(R);
-  TIMER_OFF("Assemble T^-1R matrix");
+  timer::timerOFF("Assemble T^-1R matrix");
 
   return fullPCMMatrix;
 }

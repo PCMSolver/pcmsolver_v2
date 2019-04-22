@@ -1,4 +1,4 @@
-target_sources(pcm
+target_sources(pcm-object
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/CPCMSolver.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/IEFSolver.cpp

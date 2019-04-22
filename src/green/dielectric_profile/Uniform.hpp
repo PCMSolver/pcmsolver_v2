@@ -25,8 +25,6 @@
 
 #include <iostream>
 
-#include "Config.hpp"
-
 /*! \file Uniform.hpp */
 
 namespace pcm {

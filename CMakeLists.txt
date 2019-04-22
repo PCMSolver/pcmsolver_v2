@@ -1,10 +1,14 @@
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
-project(PCMSolver LANGUAGES CXX)
+project(PCMSolver LANGUAGES CXX Fortran)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+# Use BUILD_SHARED_LIBS to toggle between static and shared
+
+set_property(DIRECTORY PROPERTY EP_BASE ${CMAKE_BINARY_DIR}/subprojects)
 
 set(STAGED_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/stage)
 message(STATUS "PCMSolver staging: ${STAGED_INSTALL_PREFIX}")
@@ -12,7 +16,7 @@ message(STATUS "PCMSolver staging: ${STAGED_INSTALL_PREFIX}")
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/upstream)
 
 include(ExternalProject)
-ExternalProject_Add(PCMSolver
+ExternalProject_Add(pcmsolver-core
   DEPENDS
     Eigen3_external
     taylor_external
@@ -23,15 +27,47 @@ ExternalProject_Add(PCMSolver
     -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
     -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
     -DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
-    -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
-    -DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
     -DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}
     -DCMAKE_CXX_STANDARD_REQUIRED=ON
     -DCMAKE_CXX_EXTENSIONS=OFF
     -DCMAKE_Fortran_COMPILER=${CMAKE_Fortran_COMPILER}
-    -DENABLE_OPENMP=${ENABLE_OPENMP}
     -DEigen3_DIR=${Eigen3_DIR}
     -Dtaylor_DIR=${taylor_DIR}
     -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
-  BUILD_ALWAYS 1
+    #-DBUILD_SHARED_LIBS=ON
+  BUILD_ALWAYS
+    1
   )
+
+# this one mimicks using DESTDIR
+install(
+  DIRECTORY
+    ${STAGED_INSTALL_PREFIX}/
+  DESTINATION
+    .
+  USE_SOURCE_PERMISSIONS
+  )
+
+option(ENABLE_TESTS "Enable unit testing" ON)
+
+if(ENABLE_TESTS)
+  enable_testing()
+
+  ExternalProject_Add(test-PCMSolver
+    DEPENDS
+      pcmsolver-core
+    SOURCE_DIR
+      ${CMAKE_CURRENT_SOURCE_DIR}/tests
+    INSTALL_COMMAND
+      ""
+    CMAKE_ARGS
+      -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+      -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+      -DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
+      -DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}
+      -DCMAKE_CXX_STANDARD_REQUIRED=ON
+      -DCMAKE_CXX_EXTENSIONS=OFF
+      -DEigen3_DIR=${Eigen3_DIR}
+      -DPCMSolver_DIR=${STAGED_INSTALL_PREFIX}/share/cmake/PCMSolver
+    )
+endif()

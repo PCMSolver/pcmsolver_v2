@@ -1,4 +1,4 @@
-target_sources(pcm-objlib
+target_sources(pcm-object
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Getkw.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/GetkwError.cpp

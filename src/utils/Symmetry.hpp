@@ -26,8 +26,6 @@
 #include <algorithm>
 #include <cmath>
 
-#include "Config.hpp"
-
 /*! \file Symmetry.hpp
  *  \class Symmetry
  *  \brief Contains very basic info about symmetry (only Abelian groups)

@@ -26,12 +26,11 @@
 #include <cmath>
 #include <vector>
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 #include <Eigen/LU>
 
+#include "utils/ErrorHandling.hpp"
 #include "utils/MathUtils.hpp"
 #include "utils/Sphere.hpp"
 

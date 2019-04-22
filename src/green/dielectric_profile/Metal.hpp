@@ -26,8 +26,6 @@
 #include <complex>
 #include <iosfwd>
 
-#include "Config.hpp"
-
 /*! \file Metal.hpp */
 
 namespace pcm {

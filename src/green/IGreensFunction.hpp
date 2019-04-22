@@ -27,8 +27,6 @@
 #include <iosfwd>
 #include <vector>
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
 
 /*! \file IGreensFunction.hpp */

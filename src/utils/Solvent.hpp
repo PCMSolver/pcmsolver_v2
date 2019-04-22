@@ -27,8 +27,6 @@
 #include <map>
 #include <string>
 
-#include "Config.hpp"
-
 /*! \file Solvent.hpp */
 
 namespace pcm {

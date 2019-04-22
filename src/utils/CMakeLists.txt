@@ -1,4 +1,4 @@
-target_sources(pcm
+target_sources(pcm-object
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Atom.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ChargeDistribution.cpp
@@ -8,18 +8,19 @@ target_sources(pcm
     ${CMAKE_CURRENT_SOURCE_DIR}/Sphere.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Symmetry.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cnpy.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/PhysicalConstants.cpp
   )
 
 # List of headers
 list(APPEND headers_list
   Atom.hpp
   ChargeDistribution.hpp
+  ErrorHandling.hpp
   Factory.hpp
   Legendre.hpp
-  Logger.hpp
-  LoggerImpl.hpp
   MathUtils.hpp
   Molecule.hpp
+  PhysicalConstants.hpp
   QuadratureRules.hpp
   Solvent.hpp
   Sphere.hpp
@@ -34,4 +35,4 @@ foreach(_header IN LISTS headers_list)
   install(FILES ${_header} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/utils)
 endforeach()
 
-#add_subdirectory(getkw)
+add_subdirectory(getkw)

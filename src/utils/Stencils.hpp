@@ -25,8 +25,6 @@
 
 #include <functional>
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
 
 /*! \typedef DifferentiableFunction

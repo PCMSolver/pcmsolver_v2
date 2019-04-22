@@ -26,8 +26,6 @@
 #include <iosfwd>
 #include <string>
 
-#include "Config.hpp"
-
 /*! \file RestartCavity.hpp */
 
 namespace pcm {

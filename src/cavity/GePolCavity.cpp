@@ -32,17 +32,14 @@
 #include <string>
 #include <vector>
 
-#include <sys/types.h>
-#include <unistd.h>
-
-#include "Config.hpp"
-
 #include <Eigen/Core>
 
 #include "CavityData.hpp"
 #include "utils/MathUtils.hpp"
+#include "utils/PhysicalConstants.hpp"
 #include "utils/Sphere.hpp"
 #include "utils/Symmetry.hpp"
+#include "utils/Timer.hpp"
 
 namespace pcm {
 namespace cavity {
@@ -52,9 +49,9 @@ GePolCavity::GePolCavity(const Molecule & molec,
                          double minR,
                          const std::string & suffix)
     : ICavity(molec), averageArea(a), probeRadius(pr), minimalRadius(minR) {
-  TIMER_ON("GePolCavity::build from Molecule object");
+  timer::timerON("GePolCavity::build from Molecule object");
   build(suffix, 50000, 1000, 100000);
-  TIMER_OFF("GePolCavity::build from Molecule object");
+  timer::timerOFF("GePolCavity::build from Molecule object");
 }
 
 GePolCavity::GePolCavity(const Sphere & sph,
@@ -63,9 +60,9 @@ GePolCavity::GePolCavity(const Sphere & sph,
                          double minR,
                          const std::string & suffix)
     : ICavity(sph), averageArea(a), probeRadius(pr), minimalRadius(minR) {
-  TIMER_ON("GePolCavity::build from single sphere");
+  timer::timerON("GePolCavity::build from single sphere");
   build(suffix, 50000, 1000, 100000);
-  TIMER_OFF("GePolCavity::build from single sphere");
+  timer::timerOFF("GePolCavity::build from single sphere");
 }
 
 GePolCavity::GePolCavity(const std::vector<Sphere> & sph,
@@ -74,9 +71,9 @@ GePolCavity::GePolCavity(const std::vector<Sphere> & sph,
                          double minR,
                          const std::string & suffix)
     : ICavity(sph), averageArea(a), probeRadius(pr), minimalRadius(minR) {
-  TIMER_ON("GePolCavity::build from list of spheres");
+  timer::timerON("GePolCavity::build from list of spheres");
   build(suffix, 50000, 1000, 100000);
-  TIMER_OFF("GePolCavity::build from list of spheres");
+  timer::timerOFF("GePolCavity::build from list of spheres");
 }
 
 void GePolCavity::build(const std::string & suffix,
@@ -92,17 +89,17 @@ void GePolCavity::build(const std::string & suffix,
   // the
   // GePol algorithm.
 
-  double * xtscor = new double[maxts];
-  double * ytscor = new double[maxts];
-  double * ztscor = new double[maxts];
-  double * ar = new double[maxts];
-  double * xsphcor = new double[maxts];
-  double * ysphcor = new double[maxts];
-  double * zsphcor = new double[maxts];
-  double * rsph = new double[maxts];
+  auto * xtscor = new double[maxts];
+  auto * ytscor = new double[maxts];
+  auto * ztscor = new double[maxts];
+  auto * ar = new double[maxts];
+  auto * xsphcor = new double[maxts];
+  auto * ysphcor = new double[maxts];
+  auto * zsphcor = new double[maxts];
+  auto * rsph = new double[maxts];
   int * nvert = new int[maxts];
-  double * vert = new double[30 * maxts];
-  double * centr = new double[30 * maxts];
+  auto * vert = new double[30 * maxts];
+  auto * centr = new double[30 * maxts];
   int * isphe = new int[maxts];
 
   // Clean-up possible heap-crap
@@ -159,7 +156,7 @@ void GePolCavity::build(const std::string & suffix,
   double * ze = zv.data();
 
   double * rin = radii_scratch.data();
-  double * mass = new double[molecule_.nAtoms()];
+  auto * mass = new double[molecule_.nAtoms()];
   for (size_t i = 0; i < molecule_.nAtoms(); ++i) {
     mass[i] = molecule_.masses(i);
   }
@@ -175,7 +172,7 @@ void GePolCavity::build(const std::string & suffix,
   pedra << "PEDRA.OUT_" << suffix << "_" << getpid();
   int len_f_pedra = std::strlen(pedra.str().c_str());
   // Go PEDRA, Go!
-  TIMER_ON("GePolCavity::generatecavity_cpp");
+  timer::timerON("GePolCavity::generatecavity_cpp");
   generatecavity_cpp(&maxts,
                      &maxsph,
                      &maxvert,
@@ -209,7 +206,7 @@ void GePolCavity::build(const std::string & suffix,
                      isphe,
                      pedra.str().c_str(),
                      &len_f_pedra);
-  TIMER_OFF("GePolCavity::generatecavity_cpp");
+  timer::timerOFF("GePolCavity::generatecavity_cpp");
 
   // The "intensive" part of updating the spheres related class data members will be
   // of course
@@ -247,8 +244,8 @@ void GePolCavity::build(const std::string & suffix,
   // Filtering array
   Eigen::Matrix<bool, 1, Eigen::Dynamic> filter =
       Eigen::Matrix<bool, 1, Eigen::Dynamic>::Zero(nts);
-  PCMSolverIndex retval = 0;
-  for (PCMSolverIndex i = 0; i < nts; ++i) {
+  int retval = 0;
+  for (int i = 0; i < nts; ++i) {
     if (std::abs(ar[i]) >= 1.0e-04) {
       retval += 1;
       centers.col(i) =
@@ -269,8 +266,7 @@ void GePolCavity::build(const std::string & suffix,
   elementRadius_ = utils::prune_vector(radii, filter);
   nElements_ = retval;
   pruned_ = nts - nElements_;
-  nIrrElements_ =
-      static_cast<PCMSolverIndex>(nElements_ / molecule_.pointGroup().nrIrrep());
+  nIrrElements_ = static_cast<int>(nElements_ / molecule_.pointGroup().nrIrrep());
 
   // Check that no points are overlapping exactly
   // Do not perform float comparisons column by column.
@@ -279,9 +275,9 @@ void GePolCavity::build(const std::string & suffix,
   // The indices of the equal elements are gathered in a std::pair and saved into a
   // std::vector
   double threshold = 1.0e-12;
-  std::vector<std::pair<PCMSolverIndex, PCMSolverIndex>> equal_elements;
-  for (PCMSolverIndex i = 0; i < nElements_; ++i) {
-    for (PCMSolverIndex j = i + 1; j < nElements_; ++j) {
+  std::vector<std::pair<int, int>> equal_elements;
+  for (int i = 0; i < nElements_; ++i) {
+    for (int j = i + 1; j < nElements_; ++j) {
       Eigen::Vector3d difference = elementCenter_.col(i) - elementCenter_.col(j);
       if (difference.isZero(threshold)) {
         equal_elements.push_back(std::make_pair(i, j));
@@ -291,7 +287,7 @@ void GePolCavity::build(const std::string & suffix,
   if (equal_elements.size() != 0) {
     // Not sure that printing the list of pairs is actually of any help...
     std::string list_of_pairs;
-    for (PCMSolverIndex i = 0; i < equal_elements.size(); ++i) {
+    for (int i = 0; i < equal_elements.size(); ++i) {
       list_of_pairs += "(" + std::to_string(equal_elements[i].first) + ", " +
                        std::to_string(equal_elements[i].second) + ")\n";
     }
@@ -304,13 +300,13 @@ void GePolCavity::build(const std::string & suffix,
   // Calculate normal vectors
   elementNormal_.resize(Eigen::NoChange, nElements_);
   elementNormal_ = elementCenter_ - elementSphereCenter_;
-  for (PCMSolverIndex i = 0; i < nElements_; ++i) {
+  for (int i = 0; i < nElements_; ++i) {
     elementNormal_.col(i) /= elementNormal_.col(i).norm();
   }
 
   // Fill elements_ vector
-  for (PCMSolverIndex i = 0; i < nElements_; ++i) {
-    PCMSolverIndex i_off = i + 1;
+  for (int i = 0; i < nElements_; ++i) {
+    int i_off = i + 1;
     bool irr = false;
     // PEDRA puts the irreducible tesserae first
     if (i < nIrrElements_)
@@ -323,10 +319,10 @@ void GePolCavity::build(const std::string & suffix,
     arcs.resize(Eigen::NoChange, nv);
     // Populate vertices and arcs
     for (int j = 0; j < nv; ++j) {
-      PCMSolverIndex j_off = (j + 1) * nElements_ - 1;
-      for (PCMSolverIndex k = 0; k < 3; ++k) {
-        PCMSolverIndex k_off = (k + 1) * nElements_ * nv;
-        PCMSolverIndex offset = i_off + j_off + k_off;
+      int j_off = (j + 1) * nElements_ - 1;
+      for (int k = 0; k < 3; ++k) {
+        int k_off = (k + 1) * nElements_ * nv;
+        int offset = i_off + j_off + k_off;
         vertices(k, j) = vert[offset];
         arcs(k, j) = centr[offset];
       }
@@ -370,7 +366,7 @@ void GePolCavity::writeOFF(const std::string & suffix) {
   fout.open(off.str().c_str());
 
   int numv = 0;
-  for (PCMSolverIndex i = 0; i < nElements_; ++i) {
+  for (int i = 0; i < nElements_; ++i) {
     numv += elements_[i].nVertices();
   }
   fout << "COFF" << std::endl;
@@ -379,7 +375,7 @@ void GePolCavity::writeOFF(const std::string & suffix) {
   int k = 0;
   double c1, c2, c3;
   Eigen::MatrixXi ivts = Eigen::MatrixXi::Zero(nElements_, 10);
-  for (PCMSolverIndex i = 0; i < nElements_; ++i) {
+  for (int i = 0; i < nElements_; ++i) {
     if (i == 0)
       fout << "# Sphere number " << elements_[i].iSphere() << std::endl;
     c1 = 1.0;
@@ -397,7 +393,7 @@ void GePolCavity::writeOFF(const std::string & suffix) {
            << " # Tess " << (i + 1) << std::endl;
     }
   }
-  for (PCMSolverIndex i = 0; i < nElements_; ++i) {
+  for (int i = 0; i < nElements_; ++i) {
     fout << elements_[i].nVertices() << " ";
     for (int j = 0; j < elements_[i].nVertices(); ++j) {
       fout << ivts(i, j) << " ";

@@ -24,11 +24,11 @@
 #include "catch.hpp"
 
 #include <cmath>
+#include <iomanip>
 #include <vector>
 
 #include <Eigen/Core>
 
-#include "LoggerInterface.hpp"
 #include "TestingMolecules.hpp"
 #include "cavity/GePolCavity.hpp"
 #include "utils/Molecule.hpp"

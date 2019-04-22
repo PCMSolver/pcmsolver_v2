@@ -25,8 +25,6 @@
 
 #include <iosfwd>
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
 
 /*! \file AnisotropicLiquid.hpp*/

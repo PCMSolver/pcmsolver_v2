@@ -25,7 +25,7 @@
 
 #include <iosfwd>
 
-#include "Config.hpp"
+#include "utils/ErrorHandling.hpp"
 
 /*! \file ISolver.hpp */
 

@@ -29,8 +29,6 @@
 #include <string>
 #include <vector>
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
 #include <Eigen/LU>
 

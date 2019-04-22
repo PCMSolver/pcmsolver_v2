@@ -26,9 +26,9 @@
 #include <map>
 #include <string>
 
-#include "Config.hpp"
-
 #include <type_traits>
+
+#include "ErrorHandling.hpp"
 
 namespace pcm {
 namespace detail {

@@ -31,14 +31,13 @@
 #include <utility>
 #include <vector>
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
 
 #include "interface/Input.hpp"
 #include "interface/Meddle.hpp"
 #include "utils/ChargeDistribution.hpp"
 #include "utils/Molecule.hpp"
+#include "utils/Timer.hpp"
 
 std::ofstream pcmsolver_out;
 
@@ -56,20 +55,20 @@ int main(int argc, char * argv[]) {
 
   using namespace pcm;
 
-  TIMER_ON("Input parsing");
+  timer::timerON("Input parsing");
   Input input(argv[1]);
-  TIMER_OFF("Input parsing");
+  timer::timerOFF("Input parsing");
   Meddle context_(input, host_writer);
 
   context_.printCitation();
   context_.printInfo();
 
-  PCMSolverIndex size = context_.getCavitySize();
+  int size = context_.getCavitySize();
 
   // Form vector with electrostatic potential
   // First compute the potential from the classical point multipoles distribution
   // then add the one from the molecule
-  TIMER_ON("Computing MEP");
+  timer::timerON("Computing MEP");
   // FIXME currently hardcoded to the dipole-dipole interaction potential in vacuum
   Eigen::VectorXd mep =
       computeDipolarPotential(context_.getCenters(), input.multipoles());
@@ -78,18 +77,18 @@ int main(int argc, char * argv[]) {
   // 2. Try to re-write this such that the input object is not needed!!!
   if (input.MEPfromMolecule())
     mep += computeMEP(context_.molecule(), context_.getCenters());
-  TIMER_OFF("Computing MEP");
+  timer::timerOFF("Computing MEP");
   context_.setSurfaceFunction(mep.size(), mep.data(), "MEP");
   // Compute apparent surface charge
   int irrep = 0;
-  TIMER_ON("Computing ASC");
+  timer::timerON("Computing ASC");
   context_.computeASC("MEP", "ASC", irrep);
   Eigen::VectorXd asc(size);
   context_.getSurfaceFunction(asc.size(), asc.data(), "ASC");
   context_.computeResponseASC("MEP", "RspASC", irrep);
   Eigen::VectorXd rsp_asc(size);
   context_.getSurfaceFunction(rsp_asc.size(), rsp_asc.data(), "RspASC");
-  TIMER_OFF("Computing ASC");
+  timer::timerOFF("Computing ASC");
   // Compute energy and print it out
   pcmsolver_out << "Solvation energy = "
                 << std::setprecision(std::numeric_limits<long double>::digits10)
@@ -99,7 +98,7 @@ int main(int argc, char * argv[]) {
   pcmsolver_out.close();
   // Write timings out
   context_.writeTimings();
-  TIMER_DONE("pcmsolver.timer.dat");
+  timer::timerDONE("pcmsolver.timer.dat");
 
   return EXIT_SUCCESS;
 }

@@ -27,8 +27,6 @@
 #include <iostream>
 #include <string>
 
-#include "Config.hpp"
-
 #include <Eigen/Cholesky>
 #include <Eigen/Core>
 
@@ -37,7 +35,9 @@
 #include "cavity/Element.hpp"
 #include "cavity/ICavity.hpp"
 #include "green/IGreensFunction.hpp"
+#include "utils/ErrorHandling.hpp"
 #include "utils/MathUtils.hpp"
+#include "utils/Timer.hpp"
 
 namespace pcm {
 namespace solver {
@@ -47,14 +47,14 @@ void CPCMSolver::buildSystemMatrix_impl(const ICavity & cavity,
                                         const IBoundaryIntegralOperator & op) {
   if (!isotropic_)
     PCMSOLVER_ERROR("C-PCM is defined only for isotropic environments!");
-  TIMER_ON("Computing S");
+  timer::timerON("Computing S");
   double epsilon = gf_o.permittivity();
   S_ = op.computeS(cavity, gf_i);
   S_ /= (epsilon - 1.0) / (epsilon + correction_);
   // Get in Hermitian form
   if (hermitivitize_)
     utils::hermitivitize(S_);
-  TIMER_OFF("Computing S");
+  timer::timerOFF("Computing S");
 
   // Symmetry-pack
   // The number of irreps in the group

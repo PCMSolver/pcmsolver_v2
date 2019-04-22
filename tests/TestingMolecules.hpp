@@ -21,8 +21,7 @@
  * PCMSolver API, see: <http://pcmsolver.readthedocs.io/>
  */
 
-#ifndef TESTINGMOLECULES_HPP
-#define TESTINGMOLECULES_HPP
+#pragma once
 
 #include <iostream>
 #include <vector>
@@ -31,6 +30,7 @@
 
 #include "utils/Atom.hpp"
 #include "utils/Molecule.hpp"
+#include "utils/PhysicalConstants.hpp"
 #include "utils/Sphere.hpp"
 #include "utils/Symmetry.hpp"
 
@@ -538,5 +538,3 @@ Molecule H2O() {
   return Molecule(nAtoms, charges, masses, geom, atoms, spheres, pGroup);
 };
 } // namespace pcm
-
-#endif // TESTINGMOLECULES_HPP

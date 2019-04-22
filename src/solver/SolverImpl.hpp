@@ -25,8 +25,6 @@
 
 #include <cmath>
 
-#include "Config.hpp"
-
 #include <Eigen/Cholesky>
 #include <Eigen/Core>
 #include <Eigen/LU>

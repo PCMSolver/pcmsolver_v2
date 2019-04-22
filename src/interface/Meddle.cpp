@@ -28,9 +28,10 @@
 #include <string>
 #include <vector>
 
-#include "Config.hpp"
-
 #include <Eigen/Core>
+
+#include "Citation.hpp"
+#include "VersionInfo.hpp"
 
 #include "bi_operators/BIOperatorData.hpp"
 #include "bi_operators/BoundaryIntegralOperator.hpp"
@@ -40,13 +41,12 @@
 #include "green/GreenData.hpp"
 #include "solver/Solver.hpp"
 #include "solver/SolverData.hpp"
-
-#include "Citation.hpp"
-#include "VersionInfo.hpp"
 #include "utils/Atom.hpp"
 #include "utils/Factory.hpp"
+#include "utils/PhysicalConstants.hpp"
 #include "utils/Solvent.hpp"
 #include "utils/Sphere.hpp"
+#include "utils/Timer.hpp"
 #include "utils/cnpy.hpp"
 
 #ifndef AS_TYPE
@@ -105,18 +105,18 @@ void Meddle::CTORBody() {
               << std::endl;
   infoStream_ << "Input parsing done " << input_.providedBy() << std::endl;
 
-  TIMER_ON("Meddle::initCavity");
+  timer::timerON("Meddle::initCavity");
   initCavity();
-  TIMER_OFF("Meddle::initCavity");
+  timer::timerOFF("Meddle::initCavity");
 
-  TIMER_ON("Meddle::initStaticSolver");
+  timer::timerON("Meddle::initStaticSolver");
   initStaticSolver();
-  TIMER_OFF("Meddle::initStaticSolver");
+  timer::timerOFF("Meddle::initStaticSolver");
 
   if (input_.isDynamic()) {
-    TIMER_ON("Meddle::initDynamicSolver");
+    timer::timerON("Meddle::initDynamicSolver");
     initDynamicSolver();
-    TIMER_OFF("Meddle::initDynamicSolver");
+    timer::timerOFF("Meddle::initDynamicSolver");
   }
 }
 
@@ -154,9 +154,9 @@ Meddle::Meddle(int nr_nuclei,
       K_0_(nullptr),
       K_d_(nullptr),
       hasDynamic_(false) {
-  TIMER_ON("Meddle::initInput");
+  timer::timerON("Meddle::initInput");
   initInput(nr_nuclei, charges, coordinates, symmetry_info);
-  TIMER_OFF("Meddle::initInput");
+  timer::timerOFF("Meddle::initInput");
 
   CTORBody();
 }
@@ -173,9 +173,9 @@ Meddle::Meddle(int nr_nuclei,
       K_0_(nullptr),
       K_d_(nullptr),
       hasDynamic_(false) {
-  TIMER_ON("Meddle::initInput");
+  timer::timerON("Meddle::initInput");
   initInput(nr_nuclei, charges, coordinates, symmetry_info);
-  TIMER_OFF("Meddle::initInput");
+  timer::timerOFF("Meddle::initInput");
 
   CTORBody();
 }
@@ -193,28 +193,28 @@ pcm::Meddle::~Meddle() {
     delete K_d_;
 }
 
-PCMSolverIndex pcmsolver_get_cavity_size(pcmsolver_context_t * context) {
+int pcmsolver_get_cavity_size(pcmsolver_context_t * context) {
   return (AS_CTYPE(pcm::Meddle, context)->getCavitySize());
 }
-PCMSolverIndex pcm::Meddle::getCavitySize() const { return cavity_->size(); }
+int pcm::Meddle::getCavitySize() const { return cavity_->size(); }
 
-PCMSolverIndex pcmsolver_get_irreducible_cavity_size(pcmsolver_context_t * context) {
+int pcmsolver_get_irreducible_cavity_size(pcmsolver_context_t * context) {
   return (AS_CTYPE(pcm::Meddle, context)->getIrreducibleCavitySize());
 }
-PCMSolverIndex pcm::Meddle::getIrreducibleCavitySize() const {
+int pcm::Meddle::getIrreducibleCavitySize() const {
   return cavity_->irreducible_size();
 }
 
 void pcmsolver_get_centers(pcmsolver_context_t * context, double centers[]) {
-  TIMER_ON("pcmsolver_get_centers");
+  timer::timerON("pcmsolver_get_centers");
   AS_CTYPE(pcm::Meddle, context)->getCenters(centers);
-  TIMER_OFF("pcmsolver_get_centers");
+  timer::timerOFF("pcmsolver_get_centers");
 }
 void pcm::Meddle::getCenters(double centers[]) const {
-  TIMER_ON("Meddle::getCenters");
+  timer::timerON("Meddle::getCenters");
   Eigen::Map<Eigen::Matrix3Xd>(centers, 3, cavity_->size()) =
       cavity_->elementCenter();
-  TIMER_OFF("Meddle::getCenters");
+  timer::timerOFF("Meddle::getCenters");
 }
 
 void pcmsolver_get_center(pcmsolver_context_t * context, int its, double center[]) {
@@ -262,10 +262,10 @@ void pcmsolver_compute_asc(pcmsolver_context_t * context,
                            const char * mep_name,
                            const char * asc_name,
                            int irrep) {
-  TIMER_ON("pcmsolver_compute_asc");
+  timer::timerON("pcmsolver_compute_asc");
   AS_TYPE(pcm::Meddle, context)
       ->computeASC(std::string(mep_name), std::string(asc_name), irrep);
-  TIMER_OFF("pcmsolver_compute_asc");
+  timer::timerOFF("pcmsolver_compute_asc");
 }
 void pcm::Meddle::computeASC(const std::string & mep_name,
                              const std::string & asc_name,
@@ -287,10 +287,10 @@ void pcmsolver_compute_response_asc(pcmsolver_context_t * context,
                                     const char * mep_name,
                                     const char * asc_name,
                                     int irrep) {
-  TIMER_ON("pcmsolver_compute_response_asc");
+  timer::timerON("pcmsolver_compute_response_asc");
   AS_TYPE(pcm::Meddle, context)
       ->computeResponseASC(std::string(mep_name), std::string(asc_name), irrep);
-  TIMER_OFF("pcmsolver_compute_response_asc");
+  timer::timerOFF("pcmsolver_compute_response_asc");
 }
 void pcm::Meddle::computeResponseASC(const std::string & mep_name,
                                      const std::string & asc_name,
@@ -313,15 +313,15 @@ void pcm::Meddle::computeResponseASC(const std::string & mep_name,
 }
 
 void pcmsolver_get_surface_function(pcmsolver_context_t * context,
-                                    PCMSolverIndex size,
+                                    int size,
                                     double values[],
                                     const char * name) {
-  TIMER_ON("pcmsolver_get_surface_function");
+  timer::timerON("pcmsolver_get_surface_function");
   AS_CTYPE(pcm::Meddle, context)
       ->getSurfaceFunction(size, values, std::string(name));
-  TIMER_OFF("pcmsolver_get_surface_function");
+  timer::timerOFF("pcmsolver_get_surface_function");
 }
-void pcm::Meddle::getSurfaceFunction(PCMSolverIndex size,
+void pcm::Meddle::getSurfaceFunction(int size,
                                      double values[],
                                      const std::string & name) const {
   if (cavity_->size() != size)
@@ -335,14 +335,14 @@ void pcm::Meddle::getSurfaceFunction(PCMSolverIndex size,
 }
 
 void pcmsolver_set_surface_function(pcmsolver_context_t * context,
-                                    PCMSolverIndex size,
+                                    int size,
                                     double values[],
                                     const char * name) {
-  TIMER_ON("pcmsolver_set_surface_function");
+  timer::timerON("pcmsolver_set_surface_function");
   AS_TYPE(pcm::Meddle, context)->setSurfaceFunction(size, values, std::string(name));
-  TIMER_OFF("pcmsolver_set_surface_function");
+  timer::timerOFF("pcmsolver_set_surface_function");
 }
-void pcm::Meddle::setSurfaceFunction(PCMSolverIndex size,
+void pcm::Meddle::setSurfaceFunction(int size,
                                      double values[],
                                      const std::string & name) {
   if (cavity_->size() != size)
@@ -411,7 +411,7 @@ void pcm::Meddle::loadSurfaceFunction(const std::string & name) {
 void pcmsolver_write_timings(pcmsolver_context_t * context) {
   AS_CTYPE(pcm::Meddle, context)->writeTimings();
 }
-void pcm::Meddle::writeTimings() const { TIMER_DONE("pcmsolver.timer.dat"); }
+void pcm::Meddle::writeTimings() const { timer::timerDONE("pcmsolver.timer.dat"); }
 
 void pcmsolver_print(pcmsolver_context_t * context) {
   AS_CTYPE(pcm::Meddle, context)->printInfo();
@@ -426,7 +426,7 @@ bool pcmsolver_is_compatible_library(void) {
   unsigned int major = (pcm::pcmsolver_get_version() >> 16);
   return (major == PROJECT_VERSION_MAJOR);
 }
-unsigned int pcm::pcmsolver_get_version(void) { return PCMSOLVER_VERSION; }
+unsigned int pcm::pcmsolver_get_version() { return PCMSOLVER_VERSION; }
 
 namespace pcm {
 Molecule Meddle::molecule() const { return input_.molecule(); }

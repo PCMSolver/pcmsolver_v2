@@ -23,8 +23,6 @@
 
 #pragma once
 
-#include "Config.hpp"
-
 #include "AnisotropicLiquid.hpp"
 #include "DerivativeTypes.hpp"
 #include "GreenData.hpp"

@@ -27,8 +27,6 @@
 #include <ostream>
 #include <string>
 
-#include "Config.hpp"
-
 namespace pcm {
 using utils::Solvent;
 

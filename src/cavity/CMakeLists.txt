@@ -1,4 +1,4 @@
-target_sources(pcm
+target_sources(pcm-object
   PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/Element.cpp
     ${CMAKE_CURRENT_LIST_DIR}/GePolCavity.cpp

@@ -1,4 +1,4 @@
-target_sources(pcm
+target_sources(pcm-object
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/pedra_dblas.f90
     ${CMAKE_CURRENT_SOURCE_DIR}/pedra_dlapack.f90

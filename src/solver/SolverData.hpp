@@ -25,8 +25,6 @@
 
 #include <string>
 
-#include "Config.hpp"
-
 namespace pcm {
 /*! @struct SolverData
  *  @brief Contains all data defined from user input in the solver section.
