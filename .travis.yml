@@ -33,7 +33,7 @@ jobs:
         - Fortran_COMPILER='gfortran'
         - BUILD_TYPE='release'
     - os: linux
-      addons: *common
+      addons:
         apt:
           packages:
             - g++
@@ -48,7 +48,7 @@ jobs:
         - BUILD_TYPE='release'
         - STATIC='--static'
     - os: linux
-      addons: *common
+      addons:
         apt:
           packages:
             - cmake
