@@ -48,18 +48,16 @@ install(
   USE_SOURCE_PERMISSIONS
   )
 
-option(ENABLE_TESTS "Enable unit testing" ON)
+# Use the BUILD_TESTING standard option to control testing
+# It is ON by default
+include(CTest)
 
-if(ENABLE_TESTS)
-  enable_testing()
-
+if(BUILD_TESTING)
   ExternalProject_Add(test-PCMSolver
     DEPENDS
       pcmsolver-core
     SOURCE_DIR
       ${CMAKE_CURRENT_SOURCE_DIR}/tests
-    INSTALL_COMMAND
-      ""
     CMAKE_ARGS
       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
       -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
@@ -67,6 +65,7 @@ if(ENABLE_TESTS)
       -DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}
       -DCMAKE_CXX_STANDARD_REQUIRED=ON
       -DCMAKE_CXX_EXTENSIONS=OFF
+      -DPARENT_BINARY_DIR=${CMAKE_CURRENT_BINARY_DIR}
       -DEigen3_DIR=${Eigen3_DIR}
       -DPCMSolver_DIR=${STAGED_INSTALL_PREFIX}/share/cmake/PCMSolver
     )
