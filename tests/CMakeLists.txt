@@ -58,7 +58,7 @@ find_package(Eigen3 3.3 CONFIG REQUIRED)
 message(STATUS "Using Eigen3: ${EIGEN3_ROOT_DIR} (version ${Eigen3_VERSION})")
 
 find_package(PCMSolver CONFIG REQUIRED)
-get_property(_loc TARGET PCMSolver::pcm PROPERTY INTERFACE_INCLUDE_DIRECTORIES)
+get_property(_loc TARGET PCMSolver::pcm PROPERTY LOCATION)
 message(STATUS "Using PCMSolver: ${_loc} (found version ${PCMSolver_VERSION})")
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -84,7 +84,7 @@ add_subdirectory(utils ${PARENT_BINARY_DIR}/tests/utils)
 # Little hack to avoid prefixing every include in every source file with "PCMSolver"
 target_include_directories(unit_tests
   SYSTEM PRIVATE
-    ${_loc}/PCMSolver
+    ${PCMSolver_INCLUDE_DIRS}/PCMSolver
   )
 
 target_link_libraries(unit_tests
@@ -102,5 +102,5 @@ install(
 
 # API tests
 add_subdirectory(C_host ${PARENT_BINARY_DIR}/tests/C_host)
-#add_subdirectory(Fortran_host ${PARENT_BINARY_DIR}/tests/Fortran_host)
+add_subdirectory(Fortran_host ${PARENT_BINARY_DIR}/tests/Fortran_host)
 add_subdirectory(standalone ${PARENT_BINARY_DIR}/tests/standalone)
