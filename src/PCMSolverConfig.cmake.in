@@ -101,7 +101,6 @@ else()
     endif()
 endif()
 
-get_filename_component(PCMSolver_BINDIR ${${PN}_EXECUTABLE} DIRECTORY)
 set(${PN}_LAUNCHER ${PACKAGE_PREFIX_DIR}/@INSTALL_BINDIR@/go_pcm.py)
 
 # find library: shared, static, or whichever

@@ -1,3 +1,5 @@
+get_filename_component(PCMSolver_BINDIR ${PCMSolver_EXECUTABLE} DIRECTORY)
+
 # Copy input files to ${PROJECT_BINARY_DIR}/tests/standalone (aka ${CMAKE_CURRENT_BINARY_DIR})
 file(
   COPY
