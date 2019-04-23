@@ -2,8 +2,6 @@
 
 ## [Unreleased]
 
-## [Version 2.0.0-alpha1] - 2019-04-XY
-
 We have introduced a number of breaking changes, motivated by the need to
 modernize the library.
 
@@ -14,6 +12,10 @@ modernize the library.
 - **BREAKING** We require a fully compliant C++14 compiler.
 - **BREAKING** We require CMake 3.9
 - Project dependencies are now managed as a superbuild.
+- The implementation of the `RadialSolution` for the second order ODE
+  associated with the spherical diffuse Green's function is less heavily
+  `template`-d.
+- The dependency on Boost.Odeint has been dropped.
 
 ### Removed
 
