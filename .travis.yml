@@ -10,6 +10,8 @@ git:
 cache:
   bundler: true
   pip: true
+  directories:
+    - $HOME/Deps/eigen
 
 env:
   global:
@@ -26,7 +28,6 @@ jobs:
             - cmake
             - gfortran
             - libboost-math-dev
-            - libeigen3-dev
       env:
         - CXX_COMPILER='clang++'
         - C_COMPILER='clang'
@@ -41,7 +42,6 @@ jobs:
             - cmake
             - gfortran
             - libboost-math-dev
-            - libeigen3-dev
       env:
         - CXX_COMPILER='g++'
         - C_COMPILER='gcc'
@@ -58,7 +58,6 @@ jobs:
             - gfortran
             - lcov
             - libboost-math-dev
-            - libeigen3-dev
       env:
         - CXX_COMPILER='g++'
         - C_COMPILER='gcc'
@@ -81,8 +80,11 @@ before_install:
   - test -n $CC && unset CC
   - test -n $CXX && unset CXX
   - test -n $FC && unset FC
+  # Dependencies are downloaded in $HOME/Downloads and installed in $HOME/Deps
+  - mkdir -p $HOME/Downloads $HOME/Deps
 
 install:
+  - ./.ci/eigen.sh
   - pip install --user pipenv --upgrade
   - pipenv install --three
 
@@ -98,7 +100,8 @@ script:
                      -DCMAKE_C_COMPILER=$C_COMPILER \
                      -DCMAKE_Fortran_COMPILER=$Fortran_COMPILER \
                      -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
-                     -DCMAKE_INSTALL_PREFIX=$HOME/Software/pcmsolver
+                     -DCMAKE_INSTALL_PREFIX=$HOME/Software/pcmsolver \
+                     -DEigen3_DIR=${HOME}/Deps/eigen/share/eigen3/cmake
   #- |
   #  pipenv run python setup.py --cxx=$CXX_COMPILER \
   #                  --cc=$C_COMPILER \
