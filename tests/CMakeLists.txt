@@ -1,4 +1,5 @@
-cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+
 project(test-PCMSolver LANGUAGES CXX C Fortran)
 
 enable_testing()

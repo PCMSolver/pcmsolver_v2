@@ -1,26 +1,31 @@
 language: cpp
+
 sudo: false
+
 dist: xenial
+
 git:
   depth: false
-notifications:
-  slack:
-    secure: F2nQIW6SiaGdw1LjuZOlgBu8rUVMllrDG/5bhmTQP7gyETfViFBjTsHQdTle6jtdb+LudleZaG7WhdEiVcKUa834rKqDk1UOt9p6bsmgbsBZBAaxmPh01iVFhKn3ML7JLjfr1YtH7MWJcsS60cNBrohXfVKfFzNgDqZEu/llr90=
+
 cache:
   bundler: true
   ccache: true
   pip: true
+
 env:
   global:
-    - USE_CCACHE=1
-    - CCACHE_COMPRESS=1
-    - CCACHE_MAXSIZE=200M
-    - CCACHE_CPP2=1
     - PIPENV_VENV_IN_PROJECT=1
     - PIPENV_IGNORE_VIRTUALENVS=1
-branches:
-  except:
-    - fix-appveyor
+
+addons:
+  apt:
+    packages:
+      - cmake
+      - gfortran
+      - libboost-math-dev
+      - python3
+      - python3-pip
+
 jobs:
   include:
     - os: linux
@@ -28,10 +33,6 @@ jobs:
         apt:
           packages:
             - clang
-            - gfortran
-            - libboost-math-dev
-            - python3
-            - python3-pip
       env:
         - CXX_COMPILER='clang++'
         - C_COMPILER='clang'
@@ -41,29 +42,8 @@ jobs:
       addons:
         apt:
           packages:
-            - g++-4.8
-            - gcc-4.8
-            - gfortran-4.8
-            - libboost-math-dev
-            - python3
-            - python3-pip
-      env:
-        - CXX_COMPILER='g++-4.8'
-        - C_COMPILER='gcc-4.8'
-        - Fortran_COMPILER='gfortran-4.8'
-        - BUILD_TYPE='release'
-    - os: linux
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-6
-            - gcc-6
-            - gfortran-6
-            - libboost-math-dev
-            - python3
-            - python3-pip
+            - g++
+            - gcc
       env:
         - CXX_COMPILER='g++-6'
         - C_COMPILER='gcc-6'
@@ -74,13 +54,7 @@ jobs:
       addons:
         apt:
           packages:
-            - g++
-            - gcc
-            - gfortran
-            - libboost-math-dev
             - lcov
-            - python3
-            - python3-pip
       env:
         - CXX_COMPILER='g++'
         - C_COMPILER='gcc'
@@ -93,38 +67,48 @@ jobs:
         apt:
           packages:
             - clang-format
-            - python3
-            - python3-pip
       if: commit_message !~ /(skip bot|bot skip|skip danger|danger skip)/
       script:
         - |
           bundle install --gemfile=.ci/Gemfile
           BUNDLE_GEMFILE=.ci/Gemfile bundle exec danger --dangerfile=.ci/Dangerfile
+
 before_install:
   - test -n $CC && unset CC
   - test -n $CXX && unset CXX
   - test -n $FC && unset FC
+
 install:
   - pip3 install --user pipenv --upgrade
   - pipenv --python $(type -P python3) install --dev
+
 before_script:
   - ./.ci/report_versions.sh
   - cd $TRAVIS_BUILD_DIR
   - echo 'Build set up summary'
+
 script:
   - |
-    pipenv run python setup.py --cxx=$CXX_COMPILER \
-                    --cc=$C_COMPILER \
-                    --fc=$Fortran_COMPILER \
-                    --type=$BUILD_TYPE \
-                    $STATIC \
-                    $COVERAGE \
-                    --prefix=$HOME/Software/pcmsolver
+    pipenv run cmake -H. -Bbuild \
+                     -DCMAKE_CXX_COMPILER=$CXX_COMPILER \
+                     -DCMAKE_C_COMPILER=$C_COMPILER \
+                     -DCMAKE_Fortran_COMPILERE=$Fortran_COMPILER \
+                     -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+                     -DCMAKE_INSTALL_PREFIX=$HOME/Software/pcmsolver
+  #- |
+  #  pipenv run python setup.py --cxx=$CXX_COMPILER \
+  #                  --cc=$C_COMPILER \
+  #                  --fc=$Fortran_COMPILER \
+  #                  --type=$BUILD_TYPE \
+  #                  $STATIC \
+  #                  $COVERAGE \
+  #                  --prefix=$HOME/Software/pcmsolver
   - |
     pipenv run cmake --build build --target install -- --jobs=2 VERBOSE=1
   - cd build
   - travis_wait 40 pipenv run python ../.ci/ci_test.py ctest --output-on-failure --verbose --parallel 2
   - pipenv run python ../.ci/ci_print_failing.py
+
 after_success:
   - |
     if [[ "$COVERAGE" = "--coverage" ]]; then
