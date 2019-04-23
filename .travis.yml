@@ -9,7 +9,6 @@ git:
 
 cache:
   bundler: true
-  ccache: true
   pip: true
 
 env:
@@ -94,7 +93,7 @@ script:
     pipenv run cmake -H. -Bbuild \
                      -DCMAKE_CXX_COMPILER=$CXX_COMPILER \
                      -DCMAKE_C_COMPILER=$C_COMPILER \
-                     -DCMAKE_Fortran_COMPILERE=$Fortran_COMPILER \
+                     -DCMAKE_Fortran_COMPILER=$Fortran_COMPILER \
                      -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
                      -DCMAKE_INSTALL_PREFIX=$HOME/Software/pcmsolver
   #- |

@@ -102,15 +102,9 @@ target_include_directories(pcm
     $<INSTALL_INTERFACE:${INSTALL_INCLUDEDIR}>
   )
 
-target_link_directories(pcm
-  INTERFACE
-    ${CMAKE_Fortran_IMPLICIT_LINK_DIRECTORIES}
-  )
-
 target_link_libraries(pcm
   INTERFACE
     ZLIB::ZLIB
-    ${CMAKE_Fortran_IMPLICIT_LINK_LIBRARIES}
   )
 
 set_target_properties(pcm
