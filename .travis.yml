@@ -23,8 +23,6 @@ addons:
       - cmake
       - gfortran
       - libboost-math-dev
-      - python3
-      - python3-pip
 
 jobs:
   include:
@@ -79,8 +77,8 @@ before_install:
   - test -n $FC && unset FC
 
 install:
-  - pip3 install --user pipenv --upgrade
-  - pipenv --python $(type -P python3) install --dev
+  - pip install --user pipenv --upgrade
+  - pipenv install --three
 
 before_script:
   - ./.ci/report_versions.sh
