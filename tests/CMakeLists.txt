@@ -61,6 +61,8 @@ find_package(PCMSolver CONFIG REQUIRED)
 get_property(_loc TARGET PCMSolver::pcm PROPERTY LOCATION)
 message(STATUS "Using PCMSolver: ${_loc} (found version ${PCMSolver_VERSION})")
 
+find_package(PythonInterp REQUIRED)
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 add_executable(unit_tests unit_tests.cpp)

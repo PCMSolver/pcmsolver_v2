@@ -33,14 +33,17 @@ import os
 import subprocess
 import sys
 
+import docopt
+
 try:
     import pcmsolver as pcm
-    from pcmsolver.external import docopt
 except ImportError as ops:
     sys.stderr.write("{}\n\n".format(ops))
-    sys.stderr.write("""You should update your PYTHONPATH to use go_pcm.py
+    sys.stderr.write(
+        """You should update your PYTHONPATH to use go_pcm.py
     export PYTHONPATH=<prefix>/@CMAKE_INSTALL_LIBDIR@/@PYMOD_INSTALL_LIBDIR@:$PYTHONPATH
-where <prefix> is either the build or the install prefix.\n""")
+where <prefix> is either the build or the install prefix.\n"""
+    )
     sys.exit(-1)
 
 options = """
@@ -59,32 +62,39 @@ def main():
     try:
         arguments = docopt.docopt(options, argv=None)
     except docopt.DocoptExit:
-        sys.stderr.write('ERROR: bad input to {}\n'.format(sys.argv[0]))
+        sys.stderr.write("ERROR: bad input to {}\n".format(sys.argv[0]))
         sys.stderr.write(options)
         sys.exit(-1)
-    input_file = arguments['--inp']
+    input_file = arguments["--inp"]
     # Do the parsing and return validated input
     parsed = pcm.parse_pcm_input(input_file)
     # The parsed, machine-readable file is now saved.
-    parsedFile = os.path.join(os.path.dirname(input_file), '@' + os.path.basename(input_file))
+    parsedFile = os.path.join(
+        os.path.dirname(input_file), "@" + os.path.basename(input_file)
+    )
     # Any leftover parsedFile will be overwritten
-    with open(parsedFile, 'w') as tmp:
+    with open(parsedFile, "w") as tmp:
         tmp.write(parsed)
     # Execute standalone
     return_code = 0
-    path_to_exe = arguments['--exe']
+    path_to_exe = arguments["--exe"]
     if path_to_exe:
         return_code = run_pcm(path_to_exe, parsedFile)
     sys.exit(return_code)
 
 
 def run_pcm(path_to_exe, parsedFile):
-    executable = os.path.join(path_to_exe, 'run_pcm@CMAKE_EXECUTABLE_SUFFIX@')
+    executable = os.path.join(path_to_exe, "run_pcm@CMAKE_EXECUTABLE_SUFFIX@")
     p = subprocess.Popen(
-        [executable, parsedFile], shell=False, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        [executable, parsedFile],
+        shell=False,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
     stdout_coded, stderr_coded = p.communicate()
-    stdout = stdout_coded.decode('UTF-8')
-    stderr = stderr_coded.decode('UTF-8')
+    stdout = stdout_coded.decode("UTF-8")
+    stderr = stderr_coded.decode("UTF-8")
 
     print(stdout)
     # Print the contents of stderr, without exiting
@@ -93,5 +103,5 @@ def run_pcm(path_to_exe, parsedFile):
     return p.returncode
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

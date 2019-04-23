@@ -14,6 +14,7 @@
 #   PCMSolver_DEFINITIONS: Definitions necessary to use PCMSolver, namely USING_PCMSolver.
 #   PCMSolver_LIBRARIES - PCMSolver library to link against.
 #   PCMSolver_LIBRARY - same as LIBRARIES
+#   PCMSolver_LAUNCHER
 #   PCMSolver_EXECUTABLE - path to PCMSolver executable
 #   PCMSolver_PYMOD - path to PCMSolver python modules
 #
@@ -88,7 +89,7 @@ find_program(_temp_exe
              PATHS ${PACKAGE_PREFIX_DIR}/@INSTALL_BINDIR@
              NO_DEFAULT_PATH)
 if(_temp_exe)
-    set(${PN}_EXECUTABLE "{_temp_exe}")
+    set(${PN}_EXECUTABLE "${_temp_exe}")
     if(_seek_exe GREATER -1)
         set(${PN}_exe_FOUND 1)
     endif()
@@ -99,6 +100,9 @@ else()
         endif()
     endif()
 endif()
+
+get_filename_component(PCMSolver_BINDIR ${${PN}_EXECUTABLE} DIRECTORY)
+set(${PN}_LAUNCHER ${PACKAGE_PREFIX_DIR}/@INSTALL_BINDIR@/go_pcm.py)
 
 # find library: shared, static, or whichever
 set(_hold_library_suffixes ${CMAKE_FIND_LIBRARY_SUFFIXES})

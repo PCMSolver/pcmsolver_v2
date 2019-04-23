@@ -30,7 +30,7 @@ add_test(
 set_tests_properties(parser_script-diffuse
   PROPERTIES
     LABELS "parser;parser_script"
-    ENVIRONMENT PYTHONPATH=${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/${PYMOD_INSTALL_LIBDIR}:$ENV{PYTHONPATH}
+    ENVIRONMENT PYTHONPATH=${PCMSolver_PYMOD}:$ENV{PYTHONPATH}
   )
 add_Catch_test(
   NAME
@@ -54,7 +54,7 @@ add_test(
 set_tests_properties(parser_script-multipoles
   PROPERTIES
     LABELS "parser;parser_script"
-    ENVIRONMENT PYTHONPATH=${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/${PYMOD_INSTALL_LIBDIR}:$ENV{PYTHONPATH}
+    ENVIRONMENT PYTHONPATH=${PCMSolver_PYMOD}:$ENV{PYTHONPATH}
   )
 add_Catch_test(
   NAME
@@ -78,7 +78,7 @@ add_test(
 set_tests_properties(parser_script-restart
   PROPERTIES
     LABELS "parser;parser_script"
-    ENVIRONMENT PYTHONPATH=${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/${PYMOD_INSTALL_LIBDIR}:$ENV{PYTHONPATH}
+    ENVIRONMENT PYTHONPATH=${PCMSolver_PYMOD}:$ENV{PYTHONPATH}
   )
 add_Catch_test(
   NAME
@@ -103,7 +103,7 @@ add_test(
 set_tests_properties(parser_script-cpcm
   PROPERTIES
     LABELS "parser;parser_script"
-    ENVIRONMENT PYTHONPATH=${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/${PYMOD_INSTALL_LIBDIR}:$ENV{PYTHONPATH}
+    ENVIRONMENT PYTHONPATH=${PCMSolver_PYMOD}:$ENV{PYTHONPATH}
   )
 add_Catch_test(
   NAME
@@ -127,7 +127,7 @@ add_test(
 set_tests_properties(parser_script-sharp
   PROPERTIES
   LABELS "parser;parser_script"
-  ENVIRONMENT PYTHONPATH=${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/${PYMOD_INSTALL_LIBDIR}:$ENV{PYTHONPATH}
+  ENVIRONMENT PYTHONPATH=${PCMSolver_PYMOD}:$ENV{PYTHONPATH}
   )
 add_Catch_test(
   NAME

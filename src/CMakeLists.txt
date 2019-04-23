@@ -87,6 +87,8 @@ list(APPEND _public_headers
   ${PROJECT_BINARY_DIR}/PCMSolverExport.h
   )
 
+add_subdirectory(tools)
+
 target_compile_definitions(pcm
   INTERFACE
     $<INSTALL_INTERFACE:USING_PCMSolver>
