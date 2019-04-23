@@ -15,5 +15,5 @@ list(APPEND _headers_list
   )
 # Sets install directory for all the headers in the list
 foreach(_header IN LISTS _headers_list)
-   install(FILES ${_header} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/utils/getkw)
+   install(FILES ${_header} DESTINATION ${INSTALL_INCLUDEDIR}/${PROJECT_NAME}/utils/getkw)
 endforeach()

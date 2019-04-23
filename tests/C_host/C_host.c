@@ -26,8 +26,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "PCMInput.h"
-#include "pcmsolver.h"
+#include <PCMSolver/PCMInput.h>
+#include <PCMSolver/pcmsolver.h>
 
 #include "C_host-functions.h"
 

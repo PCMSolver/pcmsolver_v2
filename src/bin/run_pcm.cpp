@@ -36,6 +36,7 @@
 #include "interface/Input.hpp"
 #include "interface/Meddle.hpp"
 #include "utils/ChargeDistribution.hpp"
+#include "utils/ErrorHandling.hpp"
 #include "utils/Molecule.hpp"
 #include "utils/Timer.hpp"
 

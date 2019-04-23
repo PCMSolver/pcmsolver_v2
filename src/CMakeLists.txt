@@ -94,8 +94,10 @@ target_compile_definitions(pcm
 
 target_include_directories(pcm
   INTERFACE
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/api>
+    $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
     $<INSTALL_INTERFACE:${INSTALL_INCLUDEDIR}>
-    $<INSTALL_INTERFACE:${INSTALL_INCLUDEDIR}/PCMSolver>
   )
 
 target_link_directories(pcm
@@ -117,6 +119,8 @@ set_target_properties(pcm
     PUBLIC_HEADER "${_public_headers}"
     MACOSX_RPATH ON
   )
+
+add_subdirectory(bin)
 
 install(
   TARGETS

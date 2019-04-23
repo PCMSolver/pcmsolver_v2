@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
-project(test-PCMSolver LANGUAGES CXX)
+project(test-PCMSolver LANGUAGES CXX C Fortran)
 
 enable_testing()
 
@@ -78,7 +78,14 @@ add_subdirectory(bi_operators ${PARENT_BINARY_DIR}/tests/bi_operator)
 add_subdirectory(cpcm ${PARENT_BINARY_DIR}/tests/cpcm)
 add_subdirectory(iefpcm ${PARENT_BINARY_DIR}/tests/iefpcm)
 add_subdirectory(utils ${PARENT_BINARY_DIR}/tests/utils)
-add_subdirectory(benchmark ${PARENT_BINARY_DIR}/tests/benchmark)
+# Not sure what to do about these, actually
+#add_subdirectory(benchmark ${PARENT_BINARY_DIR}/tests/benchmark)
+
+# Little hack to avoid prefixing every include in every source file with "PCMSolver"
+target_include_directories(unit_tests
+  SYSTEM PRIVATE
+    ${_loc}/PCMSolver
+  )
 
 target_link_libraries(unit_tests
   PRIVATE
@@ -93,10 +100,7 @@ install(
     ${PARENT_BINARY_DIR}
   )
 
-#add_subdirectory(C_host)
-#if(TEST_Fortran_API)
-#  add_subdirectory(Fortran_host)
-#endif()
-#if(BUILD_STANDALONE)
-#  add_subdirectory(standalone)
-#endif()
+# API tests
+add_subdirectory(C_host ${PARENT_BINARY_DIR}/tests/C_host)
+#add_subdirectory(Fortran_host ${PARENT_BINARY_DIR}/tests/Fortran_host)
+add_subdirectory(standalone ${PARENT_BINARY_DIR}/tests/standalone)

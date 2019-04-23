@@ -29,7 +29,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "PCMInput.h"
+#include <PCMSolver/PCMInput.h>
 
 #if (defined(__STDC__) && (__STDC_VERSION__ < 199901L)) && !defined(__cplusplus)
 typedef enum { false, true } bool;

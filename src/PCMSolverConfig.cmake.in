@@ -68,7 +68,7 @@ set (_valid_components
 unset(_temp_h CACHE)
 find_path(_temp_h
           NAMES PCMSolver/pcmsolver.h
-          PATHS ${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_INCLUDEDIR@
+          PATHS ${PACKAGE_PREFIX_DIR}/@INSTALL_INCLUDEDIR@
           NO_DEFAULT_PATH)
 if(_temp_h)
     set(${PN}_INCLUDE_DIR "${_temp_h}")
@@ -85,7 +85,7 @@ list(FIND ${PN}_FIND_COMPONENTS "exe" _seek_exe)
 unset(_temp_exe CACHE)
 find_program(_temp_exe
              NAMES run_pcm
-             PATHS ${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_BINDIR@
+             PATHS ${PACKAGE_PREFIX_DIR}/@INSTALL_BINDIR@
              NO_DEFAULT_PATH)
 if(_temp_exe)
     set(${PN}_EXECUTABLE "{_temp_exe}")
@@ -112,7 +112,7 @@ endif()
 unset(_temp CACHE)
 find_library(_temp
              NAMES pcm
-             PATHS ${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_LIBDIR@
+             PATHS ${PACKAGE_PREFIX_DIR}/@INSTALL_LIBDIR@
              NO_DEFAULT_PATH)
 if(_temp)
     set(${PN}_LIBRARY "${_temp}")
@@ -140,7 +140,7 @@ endif()
 set(CMAKE_FIND_LIBRARY_SUFFIXES ${_hold_library_suffixes})
 set(${PN}_LIBRARIES ${${PN}_LIBRARY})
 set(${PN}_DEFINITIONS USING_${PN})
-set(${PN}_PYMOD ${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_LIBDIR@/@PYMOD_INSTALL_LIBDIR@)
+set(${PN}_PYMOD ${PACKAGE_PREFIX_DIR}/@INSTALL_LIBDIR@/@PYMOD_INSTALL_LIBDIR@)
 
 check_required_components(${PN})
 

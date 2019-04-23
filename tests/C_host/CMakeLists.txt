@@ -3,8 +3,7 @@ target_include_directories(C_host
   PRIVATE
     ${PROJECT_SOURCE_DIR}/tests/C_host
   )
-target_link_libraries(C_host PCMSolver)
-target_link_libraries(C_host m)
+target_link_libraries(C_host PCMSolver::pcm)
 set_target_properties(C_host
   PROPERTIES
     LINKER_LANGUAGE C
@@ -27,8 +26,7 @@ target_include_directories(fail-C_host
   PRIVATE
     ${PROJECT_SOURCE_DIR}/tests/C_host
   )
-target_link_libraries(fail-C_host PCMSolver)
-target_link_libraries(fail-C_host m)
+target_link_libraries(fail-C_host PCMSolver::pcm)
 set_target_properties(fail-C_host
   PROPERTIES
     LINKER_LANGUAGE C

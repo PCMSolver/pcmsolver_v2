@@ -32,7 +32,7 @@ list(APPEND headers_list
   )
 # Sets install directory for all the headers in the list
 foreach(_header IN LISTS headers_list)
-  install(FILES ${_header} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/utils)
+  install(FILES ${_header} DESTINATION ${INSTALL_INCLUDEDIR}/${PROJECT_NAME}/utils)
 endforeach()
 
 add_subdirectory(getkw)
