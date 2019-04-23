@@ -17,13 +17,6 @@ env:
     - PIPENV_VENV_IN_PROJECT=1
     - PIPENV_IGNORE_VIRTUALENVS=1
 
-addons:
-  apt:
-    packages:
-      - cmake
-      - gfortran
-      - libboost-math-dev
-
 jobs:
   include:
     - os: linux
@@ -31,28 +24,39 @@ jobs:
         apt:
           packages:
             - clang
+            - cmake
+            - gfortran
+            - libboost-math-dev
       env:
         - CXX_COMPILER='clang++'
         - C_COMPILER='clang'
         - Fortran_COMPILER='gfortran'
         - BUILD_TYPE='release'
     - os: linux
-      addons:
+      addons: *common
         apt:
           packages:
             - g++
             - gcc
+            - cmake
+            - gfortran
+            - libboost-math-dev
       env:
-        - CXX_COMPILER='g++-6'
-        - C_COMPILER='gcc-6'
-        - Fortran_COMPILER='gfortran-6'
+        - CXX_COMPILER='g++'
+        - C_COMPILER='gcc'
+        - Fortran_COMPILER='gfortran'
         - BUILD_TYPE='release'
         - STATIC='--static'
     - os: linux
-      addons:
+      addons: *common
         apt:
           packages:
+            - cmake
+            - g++
+            - gcc
+            - gfortran
             - lcov
+            - libboost-math-dev
       env:
         - CXX_COMPILER='g++'
         - C_COMPILER='gcc'
