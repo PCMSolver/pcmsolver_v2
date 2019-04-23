@@ -26,6 +26,7 @@ jobs:
             - cmake
             - gfortran
             - libboost-math-dev
+            - libeigen3-dev
       env:
         - CXX_COMPILER='clang++'
         - C_COMPILER='clang'
@@ -40,6 +41,7 @@ jobs:
             - cmake
             - gfortran
             - libboost-math-dev
+            - libeigen3-dev
       env:
         - CXX_COMPILER='g++'
         - C_COMPILER='gcc'
@@ -56,6 +58,7 @@ jobs:
             - gfortran
             - lcov
             - libboost-math-dev
+            - libeigen3-dev
       env:
         - CXX_COMPILER='g++'
         - C_COMPILER='gcc'
