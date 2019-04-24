@@ -81,7 +81,7 @@ void GePolCavity::build(const std::string & suffix,
                         int maxsph,
                         int maxvert) {
 
-  // This is a wrapper for the generatecavity_cpp function defined in the Fortran
+  // This is a wrapper for the pedra_driver function defined in the Fortran
   // code PEDRA.
   // Here we allocate the necessary arrays to be passed to PEDRA, in particular we
   // allow
@@ -172,41 +172,41 @@ void GePolCavity::build(const std::string & suffix,
   pedra << "PEDRA.OUT_" << suffix << "_" << getpid();
   int len_f_pedra = std::strlen(pedra.str().c_str());
   // Go PEDRA, Go!
-  timer::timerON("GePolCavity::generatecavity_cpp");
-  generatecavity_cpp(&maxts,
-                     &maxsph,
-                     &maxvert,
-                     xtscor,
-                     ytscor,
-                     ztscor,
-                     ar,
-                     xsphcor,
-                     ysphcor,
-                     zsphcor,
-                     rsph,
-                     &nts,
-                     &ntsirr,
-                     &nSpheres_,
-                     &addedSpheres,
-                     xe,
-                     ye,
-                     ze,
-                     rin,
-                     mass,
-                     &averageArea,
-                     &probeRadius,
-                     &minimalRadius,
-                     &nr_gen,
-                     &gen1,
-                     &gen2,
-                     &gen3,
-                     nvert,
-                     vert,
-                     centr,
-                     isphe,
-                     pedra.str().c_str(),
-                     &len_f_pedra);
-  timer::timerOFF("GePolCavity::generatecavity_cpp");
+  timer::timerON("GePolCavity::pedra_driver");
+  pedra_driver(&maxts,
+               &maxsph,
+               &maxvert,
+               xtscor,
+               ytscor,
+               ztscor,
+               ar,
+               xsphcor,
+               ysphcor,
+               zsphcor,
+               rsph,
+               &nts,
+               &ntsirr,
+               &nSpheres_,
+               &addedSpheres,
+               xe,
+               ye,
+               ze,
+               rin,
+               mass,
+               &averageArea,
+               &probeRadius,
+               &minimalRadius,
+               &nr_gen,
+               &gen1,
+               &gen2,
+               &gen3,
+               nvert,
+               vert,
+               centr,
+               isphe,
+               pedra.str().c_str(),
+               &len_f_pedra);
+  timer::timerOFF("GePolCavity::pedra_driver");
 
   // The "intensive" part of updating the spheres related class data members will be
   // of course

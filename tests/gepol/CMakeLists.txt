@@ -12,6 +12,7 @@ target_sources(unit_tests
     ${CMAKE_CURRENT_SOURCE_DIR}/gepol_point.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/gepol_point_from-file.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/gepol_point_symmetry.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/gepol_HF.cpp
   )
 
 # gepol_point_symmetry.cpp test
@@ -126,4 +127,13 @@ add_Catch_test(
     gepol_NH3_from-file
   DEPENDS
     gepol_NH3
+  )
+
+# gepol_HF.cpp test
+add_Catch_test(
+  NAME
+    gepol_HF
+  LABELS
+    gepol
+    gepol_HF
   )

@@ -2,12 +2,14 @@
 
 ## [Unreleased]
 
-## [Version 2.0.0-alpha1] - 2019-04-XY
-
 We have introduced a number of breaking changes, motivated by the need to
 modernize the library.
 
 - The version 1 release series is available in the archived repository [PCMSolver/pcmsolver_v1]
+
+### Added
+
+- A new cavity generator using C. S. Pomelli's [TsLess algorithm](http://dx.doi.org/10.1002/jcc.20076)
 
 ### Changed
 

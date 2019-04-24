@@ -26,6 +26,7 @@
 #include "GePolCavity.hpp"
 #include "ICavity.hpp"
 #include "RestartCavity.hpp"
+#include "TsLessCavity.hpp"
 #include "utils/Factory.hpp"
 
 /*!
@@ -49,6 +50,7 @@ inline Factory<detail::CreateCavity> bootstrapFactory() {
 
   factory_.subscribe("GEPOL", createGePolCavity);
   factory_.subscribe("RESTART", createRestartCavity);
+  factory_.subscribe("TSLESS", createTsLessCavity);
 
   return factory_;
 }
