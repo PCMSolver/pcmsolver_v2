@@ -22,6 +22,7 @@ list(APPEND headers_list
   Molecule.hpp
   PhysicalConstants.hpp
   QuadratureRules.hpp
+  RungeKutta.hpp
   Solvent.hpp
   Sphere.hpp
   SplineFunction.hpp
