@@ -539,7 +539,6 @@ def verify_medium(section):
 def verify_green(section):
     allowed = ("VACUUM", "UNIFORMDIELECTRIC", "SPHERICALSHARP")
     allowed_der = ("NUMERICAL", "DERIVATIVE", "GRADIENT", "HESSIAN")
-    allowed_profiles = ("TANH", "ERF", "LOG")
 
     eps = section.get("EPS")
     epsdyn = section.get("EPSDYN")
@@ -564,11 +563,6 @@ def verify_green(section):
         if not epsdyn.is_set():
             print("EpsDyn not defined for UniformDielectric")
             sys.exit(1)
-
-    profile = section.get("PROFILE")
-    if profile.get() not in allowed_profiles:
-        print(("Allowed profiles are: {}".format(allowed_profiles)))
-        sys.exit(1)
 
 
 def check_array(name, array, offset):
