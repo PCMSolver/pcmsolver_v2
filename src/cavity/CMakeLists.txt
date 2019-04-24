@@ -4,6 +4,7 @@ target_sources(pcm-object
     ${CMAKE_CURRENT_LIST_DIR}/GePolCavity.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ICavity.cpp
     ${CMAKE_CURRENT_LIST_DIR}/RestartCavity.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/TsLessCavity.cpp
   )
 
 # List of headers
@@ -14,6 +15,7 @@ list(APPEND headers_list
   GePolCavity.hpp
   ICavity.hpp
   RestartCavity.hpp
+  TsLessCavity.hpp
   )
 # Sets install directory for all the headers in the list
 foreach(_header IN LISTS headers_list)

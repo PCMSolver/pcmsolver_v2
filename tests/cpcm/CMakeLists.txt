@@ -7,6 +7,8 @@ target_sources(unit_tests
     ${CMAKE_CURRENT_SOURCE_DIR}/cpcm_gepol-point.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cpcm_gepol-point_from-file.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cpcm_symmetry.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/cpcm_tsless-point.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/cpcm_tsless-NH3.cpp
   )
 
 # cpcm_gepol-NH3_from-file.cpp test
@@ -93,4 +95,23 @@ add_Catch_test(
     cpcm_gepol-C2H4_D2h
   REFERENCE_FILES
     ASC-cpcm_gepol-C2H4_D2h.npy
+  )
+
+# FIXME Reference files for these two tests
+# cpcm_tsless-point.cpp test
+add_Catch_test(
+  NAME
+    cpcm_tsless-point
+  LABELS
+    cpcm
+    cpcm_tsless-point
+  )
+
+# cpcm_tsless-NH3.cpp test
+add_Catch_test(
+  NAME
+    cpcm_tsless-NH3
+  LABELS
+    cpcm
+    cpcm_tsless-NH3
   )

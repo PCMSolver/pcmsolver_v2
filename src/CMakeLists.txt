@@ -65,6 +65,7 @@ add_subdirectory(interface)
 add_subdirectory(pedra)
 add_subdirectory(solver)
 add_subdirectory(utils)
+add_subdirectory(tsless)
 
 add_library(pcm $<TARGET_OBJECTS:pcm-object>)
 
