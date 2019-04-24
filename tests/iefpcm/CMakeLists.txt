@@ -2,9 +2,6 @@ target_sources(unit_tests
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/iefpcm_anisotropic-gepol-point.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/iefpcm_anisotropic-symmetry.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/iefpcm_tanh-spherical-diffuse-gepol-point.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/iefpcm_erf-spherical-diffuse-gepol-point.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/iefpcm_log-spherical-diffuse-gepol-point.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/iefpcm_sharp-gepol-point.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/iefpcm_gepol-C2H4_D2h.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/iefpcm_gepol-NH3.cpp
@@ -33,45 +30,6 @@ add_Catch_test(
     iefpcm
     iefpcm_anisotropic-symmetry
     anisotropic
-  )
-
-# iefpcm_tanh-spherical-diffuse-gepol-point.cpp test
-add_Catch_test(
-  NAME
-    iefpcm_tanh-spherical-diffuse-gepol-point
-  LABELS
-    solver
-    iefpcm
-    iefpcm_tanh-spherical-diffuse-gepol-point
-    anisotropic
-  COST
-    200.0
-  )
-
-# iefpcm_erf-spherical-diffuse-gepol-point.cpp test
-add_Catch_test(
-  NAME
-    iefpcm_erf-spherical-diffuse-gepol-point
-  LABELS
-    solver
-    iefpcm
-    iefpcm_erf-spherical-diffuse-gepol-point
-    anisotropic
-  COST
-    200.0
-  )
-
-# iefpcm_log-spherical-diffuse-gepol-point.cpp test
-add_Catch_test(
-  NAME
-    iefpcm_log-spherical-diffuse-gepol-point
-  LABELS
-    solver
-    iefpcm
-    iefpcm_log-spherical-diffuse-gepol-point
-    anisotropic
-  COST
-    200.0
   )
 
 # iefpcm_sharp-gepol-point.cpp test

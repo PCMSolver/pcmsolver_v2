@@ -222,18 +222,16 @@ private:
   double epsilonStaticOutside_;
   /// Dynamic permittivity outside the cavity
   double epsilonDynamicOutside_;
-  /// Diffuse interface: static permittivity inside the interface
+  /// Sharp interface: static permittivity inside the interface
   double epsilonStatic1_;
-  /// Diffuse interface: dynamic permittivity inside the interface
+  /// Sharp interface: dynamic permittivity inside the interface
   double epsilonDynamic1_;
-  /// Diffuse interface: static permittivity outside the interface
+  /// Sharp interface: static permittivity outside the interface
   double epsilonStatic2_;
-  /// Diffuse interface: dynamic permittivity outside the interface
+  /// Sharp interface: dynamic permittivity outside the interface
   double epsilonDynamic2_;
-  /// Center of the diffuse interface
+  /// Center of the sharp interface
   double center_;
-  /// Width of the diffuse interface
-  double width_;
   /// Maximum angular momentum
   int maxL_;
   /// Center of the dielectric sphere

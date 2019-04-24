@@ -35,6 +35,7 @@
 .venv
 .direnv
 Pipfile.lock
+.mypy_cache
 
 # Autocmake stuff
 cmake/lib/*.pyc

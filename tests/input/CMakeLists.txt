@@ -1,7 +1,6 @@
 target_sources(unit_tests
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/input_cpcm.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/input_diffuse.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/input_multipoles.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/input_restart.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/input_sharp.cpp
@@ -10,36 +9,11 @@ target_sources(unit_tests
 file(
   COPY
     cpcm.inp
-    diffuse.inp
     multipoles.inp
     restart.inp
     sharp.inp
   DESTINATION
     ${CMAKE_CURRENT_BINARY_DIR}
-  )
-
-add_test(
-  NAME
-    parser_script-diffuse
-  COMMAND
-    ${PYTHON_EXECUTABLE} "-c" "from pcmsolver import parse_pcm_input; \
-     parsed = parse_pcm_input('diffuse.inp', write_out=True)"
-  WORKING_DIRECTORY
-    ${CMAKE_CURRENT_BINARY_DIR}
-  )
-set_tests_properties(parser_script-diffuse
-  PROPERTIES
-    LABELS "parser;parser_script"
-    ENVIRONMENT PYTHONPATH=${PCMSolver_PYMOD}:$ENV{PYTHONPATH}
-  )
-add_Catch_test(
-  NAME
-    input_diffuse
-  LABELS
-    input
-    input_diffuse
-  DEPENDS
-    parser_script-diffuse
   )
 
 add_test(
@@ -89,7 +63,6 @@ add_Catch_test(
   DEPENDS
     parser_script-restart
   )
-
 
 add_test(
   NAME

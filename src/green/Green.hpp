@@ -28,22 +28,20 @@
 #include "GreenData.hpp"
 #include "IGreensFunction.hpp"
 #include "IonicLiquid.hpp"
-#include "SphericalDiffuse.hpp"
 #include "SphericalSharp.hpp"
 #include "UniformDielectric.hpp"
 #include "Vacuum.hpp"
-#include "dielectric_profile/OneLayerErf.hpp"
-#include "dielectric_profile/OneLayerTanh.hpp"
+
 #include "utils/Factory.hpp"
 
 /*!
- * \file Solver.hpp
- * \brief Top-level include file for solvers
+ * \file Green.hpp
+ * \brief Top-level include file for Green's functions
  * \author Roberto Di Remigio
  * \date 2016
  *
  * Includes all solver-related headers and defines the bootstrap function
- * for the Factory<ISolver, SolverData>
+ * for the Factory<IGreensFunction, GreenData>
  */
 
 namespace pcm {
@@ -82,13 +80,6 @@ inline Factory<detail::CreateGreensFunction> bootstrapFactory() {
                      createAnisotropicLiquid<AD_gradient>);
   factory_.subscribe("ANISOTROPICLIQUID_HESSIAN",
                      createAnisotropicLiquid<AD_hessian>);
-
-  factory_.subscribe("SPHERICALDIFFUSE_NUMERICAL_TANH",
-                     createSphericalDiffuse<dielectric_profile::OneLayerTanh>);
-  factory_.subscribe("SPHERICALDIFFUSE_NUMERICAL_ERF",
-                     createSphericalDiffuse<dielectric_profile::OneLayerErf>);
-  factory_.subscribe("SPHERICALDIFFUSE_NUMERICAL_LOG",
-                     createSphericalDiffuse<dielectric_profile::OneLayerLog>);
 
   factory_.subscribe("SPHERICALSHARP_NUMERICAL", createSphericalSharp<Stencil>);
   factory_.subscribe("SPHERICALSHARP_DERIVATIVE",

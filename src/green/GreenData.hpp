@@ -51,15 +51,12 @@ struct GreenData {
   double epsilon1;
   /*! Permittivity outside the interface */
   double epsilon2;
-  /*! Center of the diffuse/sharp layer aka the radius of diffuse/sharp sphere */
+  /*! Center of the sharp layer aka the radius of sharp sphere */
   double center;
-  /*! Width of the diffuse layer */
-  double width;
-  /*! Origin of the dielectric diffuse/sharp layer aka the center of the
-   * diffuse/sharp sphere.
+  /*! Origin of the dielectric sharp layer aka the center of the sharp sphere.
    */
   Eigen::Vector3d origin;
-  /*! Maximum angular momentum in the spherical diffuse/sharp Green's function
+  /*! Maximum angular momentum in the spherical sharp Green's function
    * summation.
    */
   int maxL;
@@ -72,7 +69,6 @@ struct GreenData {
             double e1 = 1.0,
             double e2 = 1.0,
             double c = 100.0,
-            double w = 5.0,
             const Eigen::Vector3d & o = Eigen::Vector3d::Zero(),
             int l = 50)
       : greensFunctionType(type),
@@ -83,7 +79,6 @@ struct GreenData {
         epsilon1(e1),
         epsilon2(e2),
         center(c),
-        width(w),
         origin(o),
         maxL(l) {}
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW

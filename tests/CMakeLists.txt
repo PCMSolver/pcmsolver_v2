@@ -81,8 +81,6 @@ add_subdirectory(bi_operators ${PARENT_BINARY_DIR}/tests/bi_operator)
 add_subdirectory(cpcm ${PARENT_BINARY_DIR}/tests/cpcm)
 add_subdirectory(iefpcm ${PARENT_BINARY_DIR}/tests/iefpcm)
 add_subdirectory(utils ${PARENT_BINARY_DIR}/tests/utils)
-# Not sure what to do about these, actually
-#add_subdirectory(benchmark ${PARENT_BINARY_DIR}/tests/benchmark)
 
 # Little hack to avoid prefixing every include in every source file with "PCMSolver"
 target_include_directories(unit_tests

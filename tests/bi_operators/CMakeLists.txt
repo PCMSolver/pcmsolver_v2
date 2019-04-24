@@ -26,12 +26,6 @@ add_Catch_test(
   REFERENCE_FILES
     sphericalsharp_D_collocation.npy
     sphericalsharp_S_collocation.npy
-    erfsphericaldiffuse_D_collocation.npy
-    erfsphericaldiffuse_S_collocation.npy
-    logsphericaldiffuse_D_collocation.npy
-    logsphericaldiffuse_S_collocation.npy
-    tanhsphericaldiffuse_D_collocation.npy
-    tanhsphericaldiffuse_S_collocation.npy
     uniformdielectric_S_collocation.npy
     vacuum_S_collocation.npy
     uniformdielectric_D_collocation.npy

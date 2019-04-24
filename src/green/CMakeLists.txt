@@ -2,7 +2,6 @@ target_sources(pcm-object
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/AnisotropicLiquid.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/IonicLiquid.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/SphericalDiffuse.cpp # Deactivate temporarily when Boost goes away
     ${CMAKE_CURRENT_SOURCE_DIR}/UniformDielectric.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Vacuum.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SphericalSharp.cpp
@@ -17,9 +16,7 @@ list(APPEND headers_list
   GreenUtils.hpp
   GreensFunction.hpp
   IGreensFunction.hpp
-  InterfacesImpl.hpp
   IonicLiquid.hpp
-  SphericalDiffuse.hpp
   SphericalSharp.hpp
   UniformDielectric.hpp
   Vacuum.hpp

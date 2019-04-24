@@ -126,11 +126,7 @@ void Input::reader(const std::string & filename) {
     epsilonStatic2_ = outside.getDbl("EPS2");
     epsilonDynamic2_ = outside.getDbl("EPSDYN2");
     center_ = outside.getDbl("CENTER");
-    width_ = outside.getDbl("WIDTH");
     origin_ = outside.getDblVec("INTERFACEORIGIN");
-    if (outside.getStr("TYPE") == "SPHERICALDIFFUSE") {
-      greenOutsideType_ += "_" + outside.getStr("PROFILE");
-    }
     maxL_ = outside.getInt("MAXL");
   } else { // This part must be reviewed!! Some data members are not initialized...
     // Just initialize the solvent object in this class
@@ -238,7 +234,6 @@ void Input::reader(const PCMInput & host_input) {
     epsilonStatic2_ = 0.0;
     epsilonDynamic2_ = 0.0;
     center_ = 0.0;
-    width_ = 0.0;
     origin_ = std::vector<double>(3, 0.0);
     maxL_ = 0;
   } else { // This part must be reviewed!! Some data members are not initialized...
@@ -352,7 +347,6 @@ GreenData Input::outsideStaticGreenParams() const {
     retval.epsilon1 = epsilonStatic1_;
     retval.epsilon2 = epsilonStatic2_;
     retval.center = center_;
-    retval.width = width_;
     retval.origin =
         (Eigen::Vector3d() << origin_[0], origin_[1], origin_[2]).finished();
     retval.maxL = maxL_;
@@ -366,7 +360,6 @@ GreenData Input::outsideDynamicGreenParams() const {
     retval.epsilon1 = epsilonDynamic1_;
     retval.epsilon2 = epsilonDynamic2_;
     retval.center = center_;
-    retval.width = width_;
     retval.origin =
         (Eigen::Vector3d() << origin_[0], origin_[1], origin_[2]).finished();
     retval.maxL = maxL_;
